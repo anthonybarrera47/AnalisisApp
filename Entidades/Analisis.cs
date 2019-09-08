@@ -17,17 +17,20 @@ namespace Entidades
         [ForeignKey("PacienteID")]
         public virtual Pacientes Pacientes { get; set; }
         public virtual List<DetalleAnalisis> DetalleAnalisis{ get; set; }
+        public DateTime FechaRegistro { get; set; }
         public Analisis()
         {
             AnalisisID = 0;
             PacienteID = 0;
             DetalleAnalisis = new List<DetalleAnalisis>();
+            FechaRegistro = DateTime.Now;
         }
-        public Analisis(int analisisID, int pacienteID, List<DetalleAnalisis> detalleAnalisis)
+        public Analisis(int analisisID, int pacienteID, List<DetalleAnalisis> detalleAnalisis, DateTime fechaRegistro)
         {
             AnalisisID = analisisID;
             PacienteID = pacienteID;
             DetalleAnalisis = detalleAnalisis ?? throw new ArgumentNullException(nameof(detalleAnalisis));
+            FechaRegistro = fechaRegistro;
         }
     }
 }

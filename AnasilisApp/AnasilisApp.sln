@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\DAL\DAL.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "..\Entidades\Entidades.csproj", "{73603373-8274-4A3C-A0F1-B78076A8DE22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLLTests", "..\BLLTests\BLLTests.csproj", "{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{73603373-8274-4A3C-A0F1-B78076A8DE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73603373-8274-4A3C-A0F1-B78076A8DE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73603373-8274-4A3C-A0F1-B78076A8DE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

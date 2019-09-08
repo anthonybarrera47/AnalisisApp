@@ -25,7 +25,7 @@ namespace BLL
             { throw; }
             return entity;
         }
-        public bool Eliminar(int id)
+        public virtual bool Eliminar(int id)
         {
             bool paso = false;
             try
@@ -39,8 +39,7 @@ namespace BLL
             }
             return paso;
         }
-
-        public List<T> GetList(Expression<Func<T, bool>> expression)
+        public virtual List<T> GetList(Expression<Func<T, bool>> expression)
         {
             List<T> Lista = new List<T>();
             try
@@ -50,7 +49,6 @@ namespace BLL
             { throw; }
             return Lista;
         }
-
         public virtual bool Guardar(T entity)
         {
             bool paso = false;
@@ -65,7 +63,6 @@ namespace BLL
             }
             return paso;
         }
-
         public virtual bool Modificar(T entity)
         {
             bool paso = false;
@@ -82,7 +79,6 @@ namespace BLL
             }
             return paso;
         }
-        
         public virtual void Dispose()
         {
             this._db.Dispose();

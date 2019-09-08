@@ -28,13 +28,12 @@ namespace Entidades
             TipoAnalisisID = 0;
             Resultado = string.Empty;
         }
-        public DetalleAnalisis(int detalleAnalisisID, int analisisID, Analisis analisis, int tipoAnalisisID, TipoAnalisis tipoAnalisis, string resultado)
+
+        public DetalleAnalisis(int detalleAnalisisID, int analisisID, int tipoAnalisisID, string resultado)
         {
             DetalleAnalisisID = detalleAnalisisID;
             AnalisisID = analisisID;
-            Analisis = analisis ?? throw new ArgumentNullException(nameof(analisis));
             TipoAnalisisID = tipoAnalisisID;
-            TipoAnalisis = tipoAnalisis ?? throw new ArgumentNullException(nameof(tipoAnalisis));
             Resultado = resultado ?? throw new ArgumentNullException(nameof(resultado));
         }
     }
