@@ -16,7 +16,7 @@ namespace Entidades
         public int PacienteID { get; set; }
         [ForeignKey("PacienteID")]
         public virtual Pacientes Pacientes { get; set; }
-        public virtual List<DetalleAnalisis> DetalleAnalisis{ get; set; }
+        public virtual List<DetalleAnalisis> DetalleAnalisis { get; set; }
         public DateTime FechaRegistro { get; set; }
         public Analisis()
         {
@@ -31,6 +31,10 @@ namespace Entidades
             PacienteID = pacienteID;
             DetalleAnalisis = detalleAnalisis ?? throw new ArgumentNullException(nameof(detalleAnalisis));
             FechaRegistro = fechaRegistro;
+        }
+        public void AgregarDetalle(int detalleAnalisisID, int analisisID, int tipoAnalisisID, string resultado)
+        {
+            this.DetalleAnalisis.Add(new DetalleAnalisis(detalleAnalisisID, analisisID, tipoAnalisisID, resultado));
         }
     }
 }
