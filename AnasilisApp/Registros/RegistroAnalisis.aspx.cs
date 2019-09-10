@@ -15,6 +15,7 @@ namespace AnasilisApp.Registros
         readonly string KeyViewState = "Analisis";
         protected void Page_Load(object sender, EventArgs e)
         {
+            FechaTextBox.Text = DateTime.Now.ToString("yyyy-MM-dd");
             if (!Page.IsPostBack)
             {
                 ViewState[KeyViewState] = new Analisis();
@@ -23,12 +24,19 @@ namespace AnasilisApp.Registros
         }
         private void LlenarCombo()
         {
+            TipoAnalisisDropdonwList.Items.Clear();
+            PacientesDropdownList.Items.Clear();
             RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
             TipoAnalisisDropdonwList.DataSource = repositorio.GetList(x => true);
             TipoAnalisisDropdonwList.DataValueField = "TipoAnalisisID";
             TipoAnalisisDropdonwList.DataTextField = "Descripcion";
             TipoAnalisisDropdonwList.DataBind();
-            repositorio.Dispose();
+
+            RepositorioBase<Pacientes> repositorioPacientes = new RepositorioBase<Pacientes>();
+            PacientesDropdownList.DataSource = repositorioPacientes.GetList(x => true);
+            PacientesDropdownList.DataValueField = "PacienteID";
+            PacientesDropdownList.DataTextField = "Nombre";
+            PacientesDropdownList.DataBind();
         }
         protected void BindGrid()
         {
@@ -49,7 +57,7 @@ namespace AnasilisApp.Registros
             Limpiar();
             AnalisisIdTextBox.Text = analisis.AnalisisID.ToString();
             PacientesDropdownList.SelectedValue = analisis.PacienteID.ToString();
-            FechaTextBox.Text = String.Format("dd-MM-yyyy",analisis.FechaRegistro.ToString());
+            FechaTextBox.Text = analisis.FechaRegistro.ToString("yyyy-MM-dd");
             ViewState[KeyViewState] = analisis;
             this.BindGrid();
         }
@@ -59,7 +67,7 @@ namespace AnasilisApp.Registros
             PacientesDropdownList.ClearSelection();
             TipoAnalisisDropdonwList.ClearSelection();
             ResultadoAnalisisTextBox.Text = string.Empty;
-            FechaTextBox.Text = DateTime.Now.ToString();
+            FechaTextBox.Text = DateTime.Now.ToString("yyyy-MM-dd");
             ViewState[KeyViewState] = new Analisis();
             this.BindGrid();
         }
@@ -70,18 +78,23 @@ namespace AnasilisApp.Registros
 
         protected void GuadarButton_Click(object sender, EventArgs e)
         {
+            if (!Validar())
+                return;
             bool paso = false;
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
             Analisis analisis = LLenaClase();
-
+            TipoAlerta Alerta = TipoAlerta.ErrorAlert;
             if (analisis.AnalisisID == 0)
                 paso = repositorio.Guardar(analisis);
             else
                 paso = repositorio.Modificar(analisis);
 
             if (paso)
+            {
                 Limpiar();
-
+                Alerta = TipoAlerta.SuccessAlert;
+            }
+            Extensores.Extensores.Alerta(this, Alerta);
         }
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
@@ -94,13 +107,22 @@ namespace AnasilisApp.Registros
             }
             else
             {
-
+                Extensores.Extensores.Alerta(this, TipoAlerta.ErrorAlert);
             }
-
         }
-
+        private bool Validar()
+        {
+            bool paso = true;
+            //if (TipoAnalisisDropdonwList.Items.Count == 0)
+            //    //paso = false;
+            if (PacientesDropdownList.Items.Count == 0)
+                paso = false;
+            return paso;
+        }
         protected void AgregarDetalleButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(ResultadoAnalisisTextBox.Text))
+                return;
             Analisis analisis = new Analisis();
             analisis = ViewState[KeyViewState].ToAnalisis();
             analisis.AgregarDetalle(0, analisis.AnalisisID, TipoAnalisisDropdonwList.SelectedValue.ToInt(), ResultadoAnalisisTextBox.Text);
@@ -108,6 +130,36 @@ namespace AnasilisApp.Registros
             this.BindGrid();
             ResultadoAnalisisTextBox.Text = string.Empty;
         }
+        protected void AgregarAnaliss_Click(object sender, EventArgs e)
+        {
+            RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
+            if (!string.IsNullOrEmpty(DescripcionAnalisisTextBox.Text))
+            {
+                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text));
+            }
+            LlenarCombo();
+        }
 
+        protected void AgregarPacientesButton_Click(object sender, EventArgs e)
+        {
+            RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
+            if (!string.IsNullOrEmpty(NombrePacienteTextBox.Text))
+            {
+                repositorio.Guardar(new Pacientes(0, NombrePacienteTextBox.Text, DateTime.Now));
+            }
+            else
+            {
+                Extensores.Extensores.Alerta(this, TipoAlerta.ErrorAlert);
+            }
+            LlenarCombo();
+        }
+        protected void RemoverDetalleClick_Click(object sender, EventArgs e)
+        {
+            Analisis analisis = ViewState[KeyViewState].ToAnalisis();
+            GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
+            analisis.RemoverDetalle(row.RowIndex);
+            ViewState[KeyViewState] = analisis;
+            this.BindGrid();
+        }
     }
 }

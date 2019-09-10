@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Extensores
 {
@@ -26,6 +28,10 @@ namespace Extensores
         {
             DateTime.TryParse(obj.ToString(), out DateTime value);
             return value;
+        }
+        public static void Alerta(System.Web.UI.Page page, TipoAlerta tipoAlerta)
+        {
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "alert", $"{ tipoAlerta.ToString().ToLower()}()", true);
         }
     }
 }

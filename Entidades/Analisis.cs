@@ -36,5 +36,9 @@ namespace Entidades
         {
             this.DetalleAnalisis.Add(new DetalleAnalisis(detalleAnalisisID, analisisID, tipoAnalisisID, resultado));
         }
+        public void RemoverDetalle(int Index)
+        {
+            this.DetalleAnalisis.RemoveAt(Index);
+        }
     }
 }

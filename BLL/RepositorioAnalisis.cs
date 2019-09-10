@@ -26,11 +26,12 @@ namespace BLL
                 foreach (var item in Anterior.DetalleAnalisis.ToList())
                 {
                     if (!entity.DetalleAnalisis.Exists(x => x.DetalleAnalisisID == item.DetalleAnalisisID))
-                        db.Entry(item).State = EntityState.Deleted;
+                            db.Entry(item).State = EntityState.Deleted;
                 }
                 foreach (var item in entity.DetalleAnalisis)
                 {
-                    var estado = item.DetalleAnalisisID > 0 ? EntityState.Modified : EntityState.Added;
+                    var estado = EntityState.Unchanged;
+                    estado = item.DetalleAnalisisID > 0 ? EntityState.Modified : EntityState.Added;
                     db.Entry(item).State = estado;
                 }
                 db.Entry(entity).State = EntityState.Modified;
@@ -48,7 +49,7 @@ namespace BLL
             Analisis analisis = new Analisis();
             try
             {
-                analisis = db.Analisis.Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
+                analisis = db.Analisis.AsNoTracking().Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
             }
             catch (Exception)
             { throw; }
@@ -59,13 +60,16 @@ namespace BLL
         }
         public override List<Analisis> GetList(Expression<Func<Analisis, bool>> expression)
         {
+            Contexto db = new Contexto();
             List<Analisis> Lista = new List<Analisis>();
             try
             {
-                Lista = _db.Set<Analisis>().Where(expression).ToList();
+                Lista = db.Set<Analisis>().AsNoTracking().Where(expression).ToList();
             }
             catch (Exception)
             { throw; }
+            finally
+            { db.Dispose(); }
             return Lista;
         }
 

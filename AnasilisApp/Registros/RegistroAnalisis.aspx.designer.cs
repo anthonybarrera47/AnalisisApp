@@ -49,15 +49,6 @@ namespace AnasilisApp.Registros {
         protected global::System.Web.UI.WebControls.DropDownList TipoAnalisisDropdonwList;
         
         /// <summary>
-        /// AgregarTipoAnalisis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AgregarTipoAnalisis;
-        
-        /// <summary>
         /// ResultadoAnalisisTextBox control.
         /// </summary>
         /// <remarks>
@@ -119,5 +110,41 @@ namespace AnasilisApp.Registros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button EliminarButton;
+        
+        /// <summary>
+        /// DescripcionAnalisisTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox DescripcionAnalisisTextBox;
+        
+        /// <summary>
+        /// AgregarAnaliss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AgregarAnaliss;
+        
+        /// <summary>
+        /// NombrePacienteTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NombrePacienteTextBox;
+        
+        /// <summary>
+        /// AgregarPacientesButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AgregarPacientesButton;
     }
 }

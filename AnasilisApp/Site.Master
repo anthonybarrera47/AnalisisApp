@@ -17,6 +17,26 @@
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
     <!--Alerta Sweet-->
     <script type="text/javascript" src="/Scripts/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function successalert() {
+            swal({
+                title: "Exito!!",
+                text: "Su registro ha sido guardado Exitosamente",
+                icon: "success",
+                button: "Continuar!",
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function erroralert() {
+            swal({
+                title: "Fallo!",
+                text: "Su registro no ha sido guardado",
+                icon: "error",
+                button: "Continuar!",
+            });
+        }
+    </script>
 
     <title><%: Page.Title %> AnalisisApp</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
