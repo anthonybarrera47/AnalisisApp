@@ -16,9 +16,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><%:Page.Title %></div>
-            <div class="panel-body">
+        <div class="card text-center bg-light mb-3">
+            <div class="card-header"><%:Page.Title %></div>
+            <div class="card-body">
                 <div class="form-horizontal col-md-12" role="form">
                     <%--UsuarioID--%>
                     <div class="input-group mb-2">
@@ -90,25 +90,23 @@
 
                     </div>
                     <%--GRID--%>
-                    <div class="col-md-12">
-                        <div class="table table-condensed table-bordered table-responsive">
-                            <asp:GridView ID="DetalleGridView"
-                                runat="server"
-                                CssClass="table table-condensed table-bordered table-responsive"
-                                CellPadding="4" ForeColor="#333333" GridLines="None">
-                                <AlternatingRowStyle BackColor="LightBlue" />
-                                <Columns>
-                                    <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
-                                        <ItemTemplate>
-                                            <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
-                                                Text="Remover" class="btn btn-warning btn-sm" OnClick="RemoverDetalleClick_Click" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                <RowStyle BackColor="#EFF3FB" />
-                            </asp:GridView>
-                        </div>
+                    <div class="table table-condensed table-bordered table-responsive">
+                        <asp:GridView ID="DetalleGridView"
+                            runat="server"
+                            CssClass="table table-condensed table-bordered table-responsive"
+                            CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle BackColor="LightBlue" />
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
+                                    <ItemTemplate>
+                                        <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
+                                            Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                            <RowStyle BackColor="#EFF3FB" />
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
@@ -119,7 +117,7 @@
             <div class="form-group" display: inline-block>
                 <asp:Button Text="Nuevo" class="btn btn-warning btn-sm" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
                 <asp:Button Text="Guardar" class="btn btn-success btn-sm" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click" />
-                <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" />
+                <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" OnClick="EliminarButton_Click" />
             </div>
         </div>
     </div>

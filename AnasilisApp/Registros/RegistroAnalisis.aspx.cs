@@ -75,7 +75,6 @@ namespace AnasilisApp.Registros
         {
             Limpiar();
         }
-
         protected void GuadarButton_Click(object sender, EventArgs e)
         {
             if (!Validar())
@@ -160,6 +159,27 @@ namespace AnasilisApp.Registros
             analisis.RemoverDetalle(row.RowIndex);
             ViewState[KeyViewState] = analisis;
             this.BindGrid();
+        }
+        private bool ExisteEnLaBaseDeDatos()
+        {
+            return new RepositorioBase<Analisis>().Buscar(AnalisisIdTextBox.Text.ToInt()) is null;
+        }
+        protected void EliminarButton_Click(object sender, EventArgs e)
+        {
+            int id = AnalisisIdTextBox.Text.ToInt();
+            if(ExisteEnLaBaseDeDatos())
+            {
+                Extensores.Extensores.Alerta(this, TipoAlerta.ErrorAlert);
+                return;
+            }
+            else
+            {
+                if(new RepositorioBase<Analisis>().Eliminar(id))
+                {
+                    Extensores.Extensores.Alerta(this, TipoAlerta.SuccessAlert);
+                    Limpiar();
+                }
+            }
         }
     }
 }

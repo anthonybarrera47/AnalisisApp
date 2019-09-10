@@ -31,15 +31,6 @@ namespace AnasilisApp {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// ScriptManager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager;
-        
-        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>
