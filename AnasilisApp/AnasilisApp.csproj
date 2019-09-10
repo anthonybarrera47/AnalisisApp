@@ -74,6 +74,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Consultas\ConsultaAnalisis.aspx" />
+    <Content Include="Consultas\ConsultaTipoAnalisis.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -94,6 +96,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consultas\ConsultaAnalisis.aspx.cs">
+      <DependentUpon>ConsultaAnalisis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Consultas\ConsultaAnalisis.aspx.designer.cs">
+      <DependentUpon>ConsultaAnalisis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Consultas\ConsultaTipoAnalisis.aspx.cs">
+      <DependentUpon>ConsultaTipoAnalisis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Consultas\ConsultaTipoAnalisis.aspx.designer.cs">
+      <DependentUpon>ConsultaTipoAnalisis.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -143,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Consultas\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

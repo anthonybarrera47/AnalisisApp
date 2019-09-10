@@ -15,7 +15,7 @@ namespace AnasilisApp.Registros
         readonly string KeyViewState = "Analisis";
         protected void Page_Load(object sender, EventArgs e)
         {
-            FechaTextBox.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            FechaTextBox.Text = DateTime.Now.ToFormatDate();
             if (!Page.IsPostBack)
             {
                 ViewState[KeyViewState] = new Analisis();
@@ -57,7 +57,7 @@ namespace AnasilisApp.Registros
             Limpiar();
             AnalisisIdTextBox.Text = analisis.AnalisisID.ToString();
             PacientesDropdownList.SelectedValue = analisis.PacienteID.ToString();
-            FechaTextBox.Text = analisis.FechaRegistro.ToString("yyyy-MM-dd");
+            FechaTextBox.Text = analisis.FechaRegistro.ToFormatDate();
             ViewState[KeyViewState] = analisis;
             this.BindGrid();
         }
@@ -67,7 +67,7 @@ namespace AnasilisApp.Registros
             PacientesDropdownList.ClearSelection();
             TipoAnalisisDropdonwList.ClearSelection();
             ResultadoAnalisisTextBox.Text = string.Empty;
-            FechaTextBox.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            FechaTextBox.Text = DateTime.Now.ToFormatDate();
             ViewState[KeyViewState] = new Analisis();
             this.BindGrid();
         }
@@ -134,7 +134,7 @@ namespace AnasilisApp.Registros
             RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
             if (!string.IsNullOrEmpty(DescripcionAnalisisTextBox.Text))
             {
-                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text));
+                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text,DateTime.Now.ToDatetime()));
             }
             LlenarCombo();
         }

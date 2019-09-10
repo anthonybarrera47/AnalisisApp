@@ -33,5 +33,10 @@ namespace Extensores
         {
             ScriptManager.RegisterStartupScript(page, page.GetType(), "alert", $"{ tipoAlerta.ToString().ToLower()}()", true);
         }
+        static readonly string FECHA_FORMAT = "yyyy-MM-dd";
+        public static string ToFormatDate(this DateTime dateTime)
+        {
+            return dateTime.ToString(FECHA_FORMAT);
+        }
     }
 }

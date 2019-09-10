@@ -80,6 +80,7 @@
                             <asp:Button Text="Agregar" class="btn btn-info" runat="server" ID="AgregarDetalleButton" OnClick="AgregarDetalleButton_Click" />
                         </div>
                     </div>
+                    <%--Fecha--%>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="Fecha">Fecha </span>
@@ -87,7 +88,6 @@
                         <div class="input-group-append" aria-describedby="FechaTextBox">
                             <asp:TextBox ID="FechaTextBox" TextMode="Date" runat="server" class="form-control input-sm" Visible="true"></asp:TextBox>
                         </div>
-
                     </div>
                     <%--GRID--%>
                     <div class="table table-condensed table-bordered table-responsive">
