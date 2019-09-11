@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <%--GRID--%>
-                    <div class="table table-condensed table-bordered table-responsive">
+                    <div class="table table-striped table-bordered table-responsive">
                         <asp:GridView ID="DetalleGridView"
                             runat="server"
                             CssClass="table table-condensed table-bordered table-responsive"
@@ -115,9 +115,9 @@
     <div class="panel-footer">
         <div class="text-center">
             <div class="form-group" display: inline-block>
-                <asp:Button Text="Nuevo" class="btn btn-warning btn-sm" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
-                <asp:Button Text="Guardar" class="btn btn-success btn-sm" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click" />
-                <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" OnClick="EliminarButton_Click" />
+                <asp:Button Text="Nuevo" class="btn btn-warning btn-lg" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
+                <asp:Button Text="Guardar" class="btn btn-success btn-lg" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click" />
+                <asp:Button Text="Eliminar" class="btn btn-danger btn-lg" runat="server" ID="EliminarButton" OnClick="EliminarButton_Click" />
             </div>
         </div>
     </div>

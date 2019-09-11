@@ -15,10 +15,12 @@ namespace AnasilisApp.Consultas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
-            FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
+            if(!Page.IsPostBack)
+            {
+                FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
+                FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
+            }
         }
-
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
             Expression<Func<TipoAnalisis, bool>> filtro = x => true;
@@ -42,7 +44,7 @@ namespace AnasilisApp.Consultas
 
                     break;
             }
-            DateTime fechaDesde = FechaHastaTextBox.Text.ToDatetime();
+            DateTime fechaDesde = FechaDesdeTextBox.Text.ToDatetime();
             DateTime FechaHasta = FechaHastaTextBox.Text.ToDatetime();
             List<TipoAnalisis> lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro.Date >= fechaDesde.Date && x.FechaRegistro.Date <= FechaHasta.Date).ToList();
             this.BindGrid(lista);
@@ -50,6 +52,7 @@ namespace AnasilisApp.Consultas
         private void BindGrid(List<TipoAnalisis> lista)
         {
             DatosGridView.DataSource = lista;
+            CAntidadTextBox.Text = lista.Count.ToString();
             DatosGridView.DataBind();
         }
     }

@@ -21,7 +21,6 @@
                                 <asp:ListItem>Todos</asp:ListItem>
                                 <asp:ListItem>AnalisisID</asp:ListItem>
                                 <asp:ListItem>PacienteID</asp:ListItem>
-                                <asp:ListItem>Tipo de Analisis</asp:ListItem>
                             </asp:DropDownList>
                             </div>
                         </div>
@@ -62,11 +61,20 @@
                                 <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
                                     <ItemTemplate>
                                         <asp:Button ID="EditarAnalisis" runat="server" CausesValidation="false" CommandName="Select"
-                                            Text="Editar" class="btn btn-danger btn-sm" OnClientClick="window.open('~/Registros/RegistroAnalisis.aspx?Id={0}', '');" />
+                                            Text="Editar" class="btn btn-danger btn-sm" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
+
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="Cantidad">Cantidad </span>
+                        </div>
+                        <div aria-describedby="Cantidad">
+                            <asp:TextBox ID="CAntidadTextBox" TextMode="Number" ReadOnly="true" MaxLength="9" runat="server" Text="0" class="form-control input-sm"></asp:TextBox>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,8 @@
-﻿<%@ Page Title="Consulta Tipo analisis" 
-    Language="C#" 
-    MasterPageFile="~/Site.Master" 
-    AutoEventWireup="true" 
-    CodeBehind="ConsultaTipoAnalisis.aspx.cs" 
+﻿<%@ Page Title="Consulta Tipo analisis"
+    Language="C#"
+    MasterPageFile="~/Site.Master"
+    AutoEventWireup="true"
+    CodeBehind="ConsultaTipoAnalisis.aspx.cs"
     Inherits="AnasilisApp.Consultas.ConsultaTipoAnalisis" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -57,11 +57,20 @@
 
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <RowStyle BackColor="#EFF3FB" />
-
                         </asp:GridView>
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="Cantidad">Cantidad </span>
+                        </div>
+                        <div aria-describedby="Cantidad">
+                            <asp:TextBox ID="CAntidadTextBox" TextMode="Number" ReadOnly="true" MaxLength="9" runat="server" Text="0" class="form-control input-sm"></asp:TextBox>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 </asp:Content>

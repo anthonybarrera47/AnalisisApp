@@ -112,9 +112,11 @@ namespace AnasilisApp.Registros
         private bool Validar()
         {
             bool paso = true;
-            //if (TipoAnalisisDropdonwList.Items.Count == 0)
-            //    //paso = false;
+            if (TipoAnalisisDropdonwList.Items.Count == 0)
+                paso = false;
             if (PacientesDropdownList.Items.Count == 0)
+                paso = false;
+            if (DetalleGridView.Rows.Count == 0)
                 paso = false;
             return paso;
         }
@@ -134,7 +136,7 @@ namespace AnasilisApp.Registros
             RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
             if (!string.IsNullOrEmpty(DescripcionAnalisisTextBox.Text))
             {
-                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text,DateTime.Now.ToDatetime()));
+                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text, DateTime.Now.ToDatetime()));
             }
             LlenarCombo();
         }
@@ -167,14 +169,14 @@ namespace AnasilisApp.Registros
         protected void EliminarButton_Click(object sender, EventArgs e)
         {
             int id = AnalisisIdTextBox.Text.ToInt();
-            if(ExisteEnLaBaseDeDatos())
+            if (ExisteEnLaBaseDeDatos())
             {
                 Extensores.Extensores.Alerta(this, TipoAlerta.ErrorAlert);
                 return;
             }
             else
             {
-                if(new RepositorioBase<Analisis>().Eliminar(id))
+                if (new RepositorioBase<Analisis>().Eliminar(id))
                 {
                     Extensores.Extensores.Alerta(this, TipoAlerta.SuccessAlert);
                     Limpiar();

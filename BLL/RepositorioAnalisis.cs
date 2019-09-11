@@ -12,64 +12,72 @@ namespace BLL
 {
     public class RepositorioAnalisis : RepositorioBase<Analisis>
     {
-        public RepositorioAnalisis() : base()
+        internal Contexto _db;
+        public RepositorioAnalisis()
         {
-
+            _db = new Contexto();
+        }
+        public override void Dispose()
+        {
+            _db.Dispose();
         }
         public override bool Modificar(Analisis entity)
         {
             bool paso = false;
-            Analisis Anterior = Buscar(entity.AnalisisID);
+            bool paso2 = false;
+            var Anterior = Buscar(entity.AnalisisID);
             Contexto db = new Contexto();
             try
             {
                 foreach (var item in Anterior.DetalleAnalisis.ToList())
                 {
                     if (!entity.DetalleAnalisis.Exists(x => x.DetalleAnalisisID == item.DetalleAnalisisID))
-                            db.Entry(item).State = EntityState.Deleted;
+                        db.Entry(item).State = EntityState.Deleted;
                 }
-                foreach (var item in entity.DetalleAnalisis)
+                foreach (var item in entity.DetalleAnalisis.ToList())
                 {
                     var estado = EntityState.Unchanged;
                     estado = item.DetalleAnalisisID > 0 ? EntityState.Modified : EntityState.Added;
-                    db.Entry(item).State = estado;
+                    _db.Entry(item).State = estado;
                 }
-                db.Entry(entity).State = EntityState.Modified;
-                paso = db.SaveChanges() > 0;
+                _db.Entry(entity).State = EntityState.Modified;
+        
+                paso2 = (db.SaveChanges() > 0);
+                paso = (_db.SaveChanges() > 0);
             }
             catch (Exception)
             { throw; }
             finally
             { db.Dispose(); }
-            return paso;
+            return paso||paso2;
         }
         public override Analisis Buscar(int id)
         {
-            Contexto db = new Contexto();
+            //Contexto db = new Contexto();
             Analisis analisis = new Analisis();
             try
             {
-                analisis = db.Analisis.AsNoTracking().Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
+                analisis = _db.Analisis.Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
+                //analisis = db.Analisis.Find(id);
+                //if (!(analisis is null))
+                //    analisis.DetalleAnalisis.Count();
             }
             catch (Exception)
             { throw; }
             finally
-            { db.Dispose(); }
-
+            { _db.Dispose(); }
+            _db = new Contexto();
             return analisis;
         }
         public override List<Analisis> GetList(Expression<Func<Analisis, bool>> expression)
         {
-            Contexto db = new Contexto();
             List<Analisis> Lista = new List<Analisis>();
             try
             {
-                Lista = db.Set<Analisis>().AsNoTracking().Where(expression).ToList();
+                Lista = _db.Set<Analisis>().AsNoTracking().Where(expression).ToList();
             }
             catch (Exception)
             { throw; }
-            finally
-            { db.Dispose(); }
             return Lista;
         }
 

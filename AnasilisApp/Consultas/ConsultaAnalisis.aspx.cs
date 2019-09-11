@@ -15,8 +15,12 @@ namespace AnasilisApp.Consultas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
-            FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
+            if(!Page.IsPostBack)
+            {
+                FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
+                FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
+            }
+            
         }
 
         protected void BuscarButton_Click(object sender, EventArgs e)
@@ -38,19 +42,16 @@ namespace AnasilisApp.Consultas
                     id = (FiltroTextBox.Text).ToInt();
                     filtro = x => x.PacienteID == id;
                     break;
-                case 3:
-                    id = TiposAnalisis.Find(x => x.Descripcion.Contains(FiltroTextBox.Text)).TipoAnalisisID;
-
-                    break;
             }
-            DateTime fechaDesde = FechaHastaTextBox.Text.ToDatetime();
+            DateTime fechaDesde = FechaDesdeTextBox.Text.ToDatetime();
             DateTime FechaHasta = FechaHastaTextBox.Text.ToDatetime();
-            List<Analisis> lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro.Date >= fechaDesde.Date && x.FechaRegistro.Date <= FechaHasta.Date).ToList();
+            List<Analisis> lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro >= fechaDesde && x.FechaRegistro <= FechaHasta).ToList();
             this.BindGrid(lista);
         }
         private void BindGrid(List<Analisis> lista)
         {
             DatosGridView.DataSource = lista;
+            CAntidadTextBox.Text = lista.Count.ToString();
             DatosGridView.DataBind();
         }
 
