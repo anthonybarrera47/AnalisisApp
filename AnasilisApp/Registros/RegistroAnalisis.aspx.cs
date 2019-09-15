@@ -50,6 +50,7 @@ namespace AnasilisApp.Registros
             Analisis.AnalisisID = AnalisisIdTextBox.Text.ToInt();
             Analisis.PacienteID = TipoAnalisisDropdonwList.SelectedValue.ToInt();
             Analisis.FechaRegistro = FechaTextBox.Text.ToDatetime();
+            Analisis.Monto = MontoTextBox.Text.ToDecimal();
             return Analisis;
         }
         public void LlenarCampos(Analisis analisis)
@@ -58,7 +59,10 @@ namespace AnasilisApp.Registros
             AnalisisIdTextBox.Text = analisis.AnalisisID.ToString();
             PacientesDropdownList.SelectedValue = analisis.PacienteID.ToString();
             FechaTextBox.Text = analisis.FechaRegistro.ToFormatDate();
+            MontoTextBox.Text = analisis.Monto.ToString();
+            BalanceTextBox.Text = analisis.Balance.ToString();
             ViewState[KeyViewState] = analisis;
+            Calcular();
             this.BindGrid();
         }
         private void Limpiar()
@@ -68,6 +72,8 @@ namespace AnasilisApp.Registros
             TipoAnalisisDropdonwList.ClearSelection();
             ResultadoAnalisisTextBox.Text = string.Empty;
             FechaTextBox.Text = DateTime.Now.ToFormatDate();
+            MontoTextBox.Text = 0.ToString();
+            BalanceTextBox.Text = 0.ToString();
             ViewState[KeyViewState] = new Analisis();
             this.BindGrid();
         }
@@ -129,14 +135,29 @@ namespace AnasilisApp.Registros
             analisis.AgregarDetalle(0, analisis.AnalisisID, TipoAnalisisDropdonwList.SelectedValue.ToInt(), ResultadoAnalisisTextBox.Text);
             ViewState[KeyViewState] = analisis;
             this.BindGrid();
+            Calcular();
             ResultadoAnalisisTextBox.Text = string.Empty;
+        }
+        public void Calcular()
+        {
+            RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
+            decimal Monto = 0;
+            Analisis analisis = ViewState[KeyViewState].ToAnalisis();
+            foreach (var item in analisis.DetalleAnalisis.ToList())
+            {
+                TipoAnalisis tipo = new RepositorioBase<TipoAnalisis>().Buscar(item.TipoAnalisisID);
+                Monto += !tipo.EsNulo() ? 0 : tipo.Monto;
+            }
+            MontoTextBox.Text = Monto.ToString();
+            ViewState[KeyViewState] = analisis;
+            this.BindGrid();
         }
         protected void AgregarAnaliss_Click(object sender, EventArgs e)
         {
             RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
-            if (!string.IsNullOrEmpty(DescripcionAnalisisTextBox.Text))
+            if (!string.IsNullOrEmpty(DescripcionAnalisisTextBox.Text) && PrecioAnalisisTexBox.Text.ToDecimal()>0)
             {
-                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text, DateTime.Now.ToDatetime()));
+                repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text, PrecioAnalisisTexBox.Text.ToDecimal(), DateTime.Now.ToDatetime())); ;
             }
             LlenarCombo();
         }
@@ -160,14 +181,17 @@ namespace AnasilisApp.Registros
             GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
             analisis.RemoverDetalle(row.RowIndex);
             ViewState[KeyViewState] = analisis;
-            this.BindGrid();
+            Calcular();
         }
         private bool ExisteEnLaBaseDeDatos()
         {
-            return new RepositorioBase<Analisis>().Buscar(AnalisisIdTextBox.Text.ToInt()) is null;
+            RepositorioBase<Analisis> repositorio = new RepositorioBase<Analisis>();
+            Analisis analisis = repositorio.Buscar(AnalisisIdTextBox.Text.ToInt());
+            return !analisis.EsNulo();
         }
         protected void EliminarButton_Click(object sender, EventArgs e)
         {
+            RepositorioBase<Analisis> repositorio = new RepositorioBase<Analisis>();
             int id = AnalisisIdTextBox.Text.ToInt();
             if (ExisteEnLaBaseDeDatos())
             {
@@ -176,12 +200,21 @@ namespace AnasilisApp.Registros
             }
             else
             {
-                if (new RepositorioBase<Analisis>().Eliminar(id))
+                if (repositorio.Eliminar(id))
                 {
                     Extensores.Extensores.Alerta(this, TipoAlerta.SuccessAlert);
                     Limpiar();
                 }
             }
+            repositorio.Dispose();
+        }
+
+        protected void DetalleGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            Analisis analisis = ViewState[KeyViewState].ToAnalisis();
+            DetalleGridView.DataSource = analisis.DetalleAnalisis;
+            DetalleGridView.PageIndex = e.NewPageIndex;
+            DetalleGridView.DataBind();
         }
     }
 }

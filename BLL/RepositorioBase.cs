@@ -12,7 +12,7 @@ namespace BLL
 {
     public class RepositorioBase<T> :IDisposable, IRepository<T> where T : class
     {
-        private Contexto _db;
+        internal Contexto _db;
         public RepositorioBase()
         {
             _db = new Contexto();

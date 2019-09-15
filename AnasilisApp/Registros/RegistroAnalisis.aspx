@@ -20,7 +20,7 @@
             <div class="card-header"><%:Page.Title %></div>
             <div class="card-body">
                 <div class="form-horizontal col-md-12" role="form">
-                    <%--UsuarioID--%>
+                    <%--AnalisisID--%>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="AnalisisID">AnalisisID </span>
@@ -85,28 +85,58 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="Fecha">Fecha </span>
                         </div>
-                        <div class="input-group-append" aria-describedby="FechaTextBox">
+                        <div class="input-group-append" aria-describedby="Fecha">
                             <asp:TextBox ID="FechaTextBox" TextMode="Date" runat="server" class="form-control input-sm" Visible="true"></asp:TextBox>
                         </div>
                     </div>
                     <%--GRID--%>
-                    <div class="table table-striped table-bordered table-responsive">
-                        <asp:GridView ID="DetalleGridView"
-                            runat="server"
-                            CssClass="table table-condensed table-bordered table-responsive"
-                            CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="LightBlue" />
-                            <Columns>
-                                <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
-                                    <ItemTemplate>
-                                        <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
-                                            Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <RowStyle BackColor="#EFF3FB" />
-                        </asp:GridView>
+                    <asp:ScriptManager ID="ScriptManger" runat="server"></asp:ScriptManager>
+                    <asp:UpdatePanel ID="UpdatePanel" runat="server">
+                        <ContentTemplate>
+                            <div class="row">
+                                <div class="table table-responsive">
+                                    <asp:GridView ID="DetalleGridView"
+                                        runat="server"
+                                        CssClass="table table-condensed table-bordered table-responsive"
+                                        CellPadding="4" ForeColor="#333333" GridLines="None"
+                                        OnPageIndexChanging="DetalleGridView_PageIndexChanging"
+                                        AllowPaging="true" PageSize="5">
+                                        <AlternatingRowStyle BackColor="LightBlue" />
+                                        <Columns>
+                                            <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
+                                                        Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                        <RowStyle BackColor="#EFF3FB" />
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="DetalleGridView" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+
+
+                    <%--Monto--%>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="MontoLB">Monto </span>
+                        </div>
+                        <div aria-describedby="MontoLB">
+                            <asp:TextBox ID="MontoTextBox" ReadOnly="true" runat="server" class="form-control input-sm"></asp:TextBox>
+                        </div>
+                        <%--Balance--%>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="BalanceLB">Balance </span>
+                        </div>
+                        <div aria-describedby="BalanceLB">
+                            <asp:TextBox ID="BalanceTextBox" ReadOnly="true" runat="server" class="form-control input-sm"></asp:TextBox>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,12 +163,23 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <%--Descripcion--%>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
+
                             <span class="input-group-text" id="DescripcionLb">Descripción </span>
                         </div>
                         <div aria-describedby="DescripcionLb">
                             <asp:TextBox ID="DescripcionAnalisisTextBox" runat="server" class="form-control input-sm"></asp:TextBox>
+                        </div>
+                    </div>
+                    <%--Precio--%>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="PrecioLB">Precio </span>
+                        </div>
+                        <div aria-describedby="DescripcionLb">
+                            <asp:TextBox ID="PrecioAnalisisTexBox" TextMode="Number" runat="server" class="form-control input-sm"></asp:TextBox>
                         </div>
                     </div>
                 </div>
@@ -160,6 +201,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <%--NombrePacienteTextBox--%>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="Nombre">Nombre </span>

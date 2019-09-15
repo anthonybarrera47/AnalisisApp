@@ -15,6 +15,10 @@ namespace Extensores
         {
             return (Analisis)obj;
         }
+        public static Pagos ToPago(this object obj)
+        {
+            return (Pagos)obj;
+        }
         public static bool EsNulo(this object obj)
         {
             return obj != null;
@@ -22,6 +26,11 @@ namespace Extensores
         public static int ToInt(this object obj)
         {
             int.TryParse(obj.ToString(), out int value);
+            return value;
+        }
+        public static Decimal ToDecimal(this object obj)
+        {
+            Decimal.TryParse(obj.ToString(), out Decimal value);
             return value;
         }
         public static DateTime ToDatetime(this object obj)

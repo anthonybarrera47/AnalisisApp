@@ -61,6 +61,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" runat="server" href="~/Registros/RegistroAnalisis.aspx">Analisis</a>
                                 <a class="dropdown-item" runat="server" href="#">Tipo de Analisis</a>
+                                <a class="dropdown-item" runat="server" href="~/Registros/RegistroPagos.aspx">Pagos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">

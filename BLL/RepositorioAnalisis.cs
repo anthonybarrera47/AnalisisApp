@@ -12,14 +12,14 @@ namespace BLL
 {
     public class RepositorioAnalisis : RepositorioBase<Analisis>
     {
-        internal Contexto _db;
-        public RepositorioAnalisis()
+        public RepositorioAnalisis() : base()
         {
-            _db = new Contexto();
+
         }
-        public override void Dispose()
+        public override bool Guardar(Analisis entity)
         {
-            _db.Dispose();
+            entity.Balance = entity.Monto;
+            return base.Guardar(entity);
         }
         public override bool Modificar(Analisis entity)
         {
@@ -32,16 +32,23 @@ namespace BLL
                 foreach (var item in Anterior.DetalleAnalisis.ToList())
                 {
                     if (!entity.DetalleAnalisis.Exists(x => x.DetalleAnalisisID == item.DetalleAnalisisID))
+                    {
+                        entity.Balance -= new RepositorioBase<TipoAnalisis>().Buscar(item.TipoAnalisisID).Monto;
                         db.Entry(item).State = EntityState.Deleted;
+                    }
                 }
                 foreach (var item in entity.DetalleAnalisis.ToList())
                 {
                     var estado = EntityState.Unchanged;
-                    estado = item.DetalleAnalisisID > 0 ? EntityState.Modified : EntityState.Added;
+                    if (item.DetalleAnalisisID==0)
+                    {
+                        entity.Balance += db.TipoAnalisis.Find(item.TipoAnalisisID).Monto;
+                        estado = EntityState.Added;
+                    }
                     _db.Entry(item).State = estado;
                 }
                 _db.Entry(entity).State = EntityState.Modified;
-        
+
                 paso2 = (db.SaveChanges() > 0);
                 paso = (_db.SaveChanges() > 0);
             }
@@ -49,18 +56,14 @@ namespace BLL
             { throw; }
             finally
             { db.Dispose(); }
-            return paso||paso2;
+            return paso || paso2;
         }
         public override Analisis Buscar(int id)
         {
-            //Contexto db = new Contexto();
             Analisis analisis = new Analisis();
             try
             {
                 analisis = _db.Analisis.Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
-                //analisis = db.Analisis.Find(id);
-                //if (!(analisis is null))
-                //    analisis.DetalleAnalisis.Count();
             }
             catch (Exception)
             { throw; }

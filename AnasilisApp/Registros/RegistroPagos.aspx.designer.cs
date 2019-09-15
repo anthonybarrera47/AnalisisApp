@@ -10,16 +10,16 @@
 namespace AnasilisApp.Registros {
     
     
-    public partial class RegistroAnalisis {
+    public partial class RegistroPagos {
         
         /// <summary>
-        /// AnalisisIdTextBox control.
+        /// PagosIdTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AnalisisIdTextBox;
+        protected global::System.Web.UI.WebControls.TextBox PagosIdTextBox;
         
         /// <summary>
         /// BuscarButton control.
@@ -31,40 +31,49 @@ namespace AnasilisApp.Registros {
         protected global::System.Web.UI.WebControls.Button BuscarButton;
         
         /// <summary>
-        /// PacientesDropdownList control.
+        /// AnalisisDropdownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList PacientesDropdownList;
+        protected global::System.Web.UI.WebControls.DropDownList AnalisisDropdownList;
         
         /// <summary>
-        /// TipoAnalisisDropdonwList control.
+        /// PacienteNombreBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TipoAnalisisDropdonwList;
+        protected global::System.Web.UI.WebControls.TextBox PacienteNombreBox;
         
         /// <summary>
-        /// ResultadoAnalisisTextBox control.
+        /// BalanceTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ResultadoAnalisisTextBox;
+        protected global::System.Web.UI.WebControls.TextBox BalanceTextBox;
         
         /// <summary>
-        /// AgregarDetalleButton control.
+        /// MontoPagarTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AgregarDetalleButton;
+        protected global::System.Web.UI.WebControls.TextBox MontoPagarTextBox;
+        
+        /// <summary>
+        /// AgregarPagoButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AgregarPagoButton;
         
         /// <summary>
         /// FechaTextBox control.
@@ -103,24 +112,6 @@ namespace AnasilisApp.Registros {
         protected global::System.Web.UI.WebControls.GridView DetalleGridView;
         
         /// <summary>
-        /// MontoTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MontoTextBox;
-        
-        /// <summary>
-        /// BalanceTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox BalanceTextBox;
-        
-        /// <summary>
         /// NuevoButton control.
         /// </summary>
         /// <remarks>
@@ -146,50 +137,5 @@ namespace AnasilisApp.Registros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button EliminarButton;
-        
-        /// <summary>
-        /// DescripcionAnalisisTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescripcionAnalisisTextBox;
-        
-        /// <summary>
-        /// PrecioAnalisisTexBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PrecioAnalisisTexBox;
-        
-        /// <summary>
-        /// AgregarAnaliss control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AgregarAnaliss;
-        
-        /// <summary>
-        /// NombrePacienteTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NombrePacienteTextBox;
-        
-        /// <summary>
-        /// AgregarPacientesButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AgregarPacientesButton;
     }
 }
