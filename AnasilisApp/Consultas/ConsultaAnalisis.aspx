@@ -17,18 +17,30 @@
                     <div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
+                                <span class="input-group-text" id="FiltroDropDownList">Filtro </span>
+                            </div>
+                            <div class="input-group-prepend col-md-4" aria-describedby="FiltroDropDownList">
                                 <asp:DropDownList ID="BuscarPorDropDownList" runat="server" CssClass="form-control input-sm">
-                                <asp:ListItem>Todos</asp:ListItem>
-                                <asp:ListItem>AnalisisID</asp:ListItem>
-                                <asp:ListItem>PacienteID</asp:ListItem>
-                            </asp:DropDownList>
+                                    <asp:ListItem>Todos</asp:ListItem>
+                                    <asp:ListItem>AnalisisID</asp:ListItem>
+                                    <asp:ListItem>PacienteID</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="CriterioLB">Criterio </span>
+                            </div>
+                            <div class="input-group-append" aria-describedby="CriterioLB">
+                                <asp:TextBox ID="FiltroTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                            </div>
+                            <div class="input-group-append" aria-describedby="FiltroTextBox">
+                                <asp:Button ID="BuscarButton" runat="server" Class="btn btn-success input-sm" Text="Buscar" OnClick="BuscarButton_Click" />
                             </div>
                         </div>
-                        <div class="input-group-append">
-                            <asp:TextBox ID="FiltroTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
-                        </div>
-                        <div class="input-group-append" aria-describedby="FiltroTextBox">
-                            <asp:Button ID="BuscarButton" runat="server" Class="btn btn-success input-sm" Text="Buscar" OnClick="BuscarButton_Click" />
+                    </div>
+                    <%--CheckBox--%>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <asp:CheckBox AutoPostBack="true" Checked="true" OnCheckedChanged="FechaCheckBox_CheckedChanged" ID="FechaCheckBox" runat="server" Text="Filtrar por fecha" />
                         </div>
                     </div>
                     <%--FechaDesde--%>

@@ -52,19 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexto.cs" />
-    <Compile Include="Migrations\201909101755410_InitialCreate.cs" />
-    <Compile Include="Migrations\201909101755410_InitialCreate.Designer.cs">
-      <DependentUpon>201909101755410_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909140043536_PrimeraMigracion.cs" />
-    <Compile Include="Migrations\201909140043536_PrimeraMigracion.Designer.cs">
-      <DependentUpon>201909140043536_PrimeraMigracion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909142026304_SegundaMigracion.cs" />
-    <Compile Include="Migrations\201909142026304_SegundaMigracion.Designer.cs">
-      <DependentUpon>201909142026304_SegundaMigracion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,17 +63,6 @@
       <Project>{61CA7A76-5372-482F-BC63-44CD30B46E6E}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909101755410_InitialCreate.resx">
-      <DependentUpon>201909101755410_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909140043536_PrimeraMigracion.resx">
-      <DependentUpon>201909140043536_PrimeraMigracion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909142026304_SegundaMigracion.resx">
-      <DependentUpon>201909142026304_SegundaMigracion.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

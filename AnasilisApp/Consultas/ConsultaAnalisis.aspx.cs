@@ -15,19 +15,19 @@ namespace AnasilisApp.Consultas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack)
+            if (!Page.IsPostBack)
             {
                 FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
                 FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
             }
-            
+
         }
 
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
             Expression<Func<Analisis, bool>> filtro = x => true;
             RepositorioBase<Analisis> repositorio = new RepositorioBase<Analisis>();
-            List<TipoAnalisis> TiposAnalisis = new RepositorioBase<TipoAnalisis>().GetList(x => true);
+            List<Analisis> lista = new List<Analisis>();
             int id;
             switch (BuscarPorDropDownList.SelectedIndex)
             {
@@ -45,7 +45,10 @@ namespace AnasilisApp.Consultas
             }
             DateTime fechaDesde = FechaDesdeTextBox.Text.ToDatetime();
             DateTime FechaHasta = FechaHastaTextBox.Text.ToDatetime();
-            List<Analisis> lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro >= fechaDesde && x.FechaRegistro <= FechaHasta).ToList();
+            if (FechaCheckBox.Checked)
+                lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro >= fechaDesde && x.FechaRegistro <= FechaHasta).ToList();
+            else
+                lista = repositorio.GetList(filtro);
             this.BindGrid(lista);
         }
         private void BindGrid(List<Analisis> lista)
@@ -55,5 +58,19 @@ namespace AnasilisApp.Consultas
             DatosGridView.DataBind();
         }
 
+        protected void FechaCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (FechaCheckBox.Checked)
+            {
+                FechaDesdeTextBox.Visible = true;
+                FechaHastaTextBox.Visible = true;
+            }
+            else
+            {
+                FechaDesdeTextBox.Visible = false;
+                FechaHastaTextBox.Visible = false;
+            }
+
+        }
     }
 }

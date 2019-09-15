@@ -121,14 +121,13 @@
                         </Triggers>
                     </asp:UpdatePanel>
 
-
                     <%--Monto--%>
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text" id="MontoLB">Monto </span>
                         </div>
                         <div aria-describedby="MontoLB">
-                            <asp:TextBox ID="MontoTextBox" ReadOnly="true" runat="server" class="form-control input-sm"></asp:TextBox>
+                            <asp:TextBox AutoPostBack="true" ID="MontoTextBox" ReadOnly="true" runat="server" class="form-control input-sm"></asp:TextBox>
                         </div>
                         <%--Balance--%>
                         <div class="input-group-prepend">

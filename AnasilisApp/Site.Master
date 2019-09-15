@@ -16,23 +16,29 @@
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
     <!--Alerta Sweet-->
     <script type="text/javascript" src="/Scripts/sweetalert.min.js"></script>
+    <!--Alerta Sweet 2.0-->
+    <script type="text/javascript" src="/Scripts/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
-        function successalert() {
-            swal({
-                title: "Exito!!",
-                text: "Su registro ha sido guardado Exitosamente",
-                icon: "success",
-                button: "Continuar!",
+        function sweetalert(Title,Text,icon,Button) {
+            Swal.fire({
+                title: Title,
+                text: Text,
+                type: icon,
             });
         }
     </script>
     <script type="text/javascript">
-        function erroralert() {
-            swal({
-                title: "Fallo!",
-                text: "Su registro no ha sido guardado",
-                icon: "error",
-                button: "Continuar!",
+        function ToastSweetAlert(Type,Title) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            Toast.fire({
+                type: Type,
+                title: Title
             });
         }
     </script>

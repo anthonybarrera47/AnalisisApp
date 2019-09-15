@@ -10,52 +10,54 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class RepositorioBase<T> :IDisposable, IRepository<T> where T : class
+    public class RepositorioBase<T> : IRepository<T> where T : class
     {
-        internal Contexto _db;
         public RepositorioBase()
         {
-            _db = new Contexto();
+            
         }
         public virtual T Buscar(int id)
         {
             T entity;
+            Contexto db = new Contexto();
             try
             {
-                entity = _db.Set<T>().Find(id);
+                entity = db.Set<T>().Find(id);
             }
             catch (Exception)
             { throw; }
+            finally
+            { db.Dispose(); }
             return entity;
         }
-
-        public virtual void Dispose()
-        {
-            _db.Dispose();
-        }
-
         public virtual bool Eliminar(int id)
         {
             bool paso = false;
+            Contexto db = new Contexto();
             try
             {
-                T entity = _db.Set<T>().Find(id); ;
-                _db.Set<T>().Remove(entity);
-                paso = _db.SaveChanges() > 0;
+                T entity = db.Set<T>().Find(id); ;
+                db.Set<T>().Remove(entity);
+                paso = db.SaveChanges() > 0;
             }
             catch (Exception)
             { throw; }
+            finally
+            { db.Dispose(); }
             return paso;
         }
         public virtual List<T> GetList(Expression<Func<T, bool>> expression)
         {
+            Contexto db = new Contexto();
             List<T> Lista = new List<T>();
             try
             {
-                Lista = _db.Set<T>().AsNoTracking().Where(expression).ToList();
+                Lista = db.Set<T>().AsNoTracking().Where(expression).ToList();
             }
             catch (Exception)
             { throw; }
+            finally
+            { db.Dispose(); }
             return Lista;
         }
         public virtual bool Guardar(T entity)
@@ -69,6 +71,8 @@ namespace BLL
             }
             catch (Exception)
             { throw; }
+            finally
+            { _db.Dispose(); }
             return paso;
         }
         public virtual bool Modificar(T entity)
@@ -82,6 +86,8 @@ namespace BLL
             }
             catch (Exception)
             { throw; }
+            finally
+            { _db.Dispose(); }
             return paso;
         }
     }
