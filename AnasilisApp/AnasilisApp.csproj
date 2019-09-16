@@ -51,6 +51,7 @@
       <HintPath>packages\EntityFramework.6.3.0-preview9-19423-04\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -86,6 +87,7 @@
     <Content Include="Global.asax" />
     <Content Include="Registros\RegistroAnalisis.aspx" />
     <Content Include="Registros\RegistroPagos.aspx" />
+    <Content Include="Registros\RegistroTipoAnalisis.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -136,6 +138,13 @@
     </Compile>
     <Compile Include="Registros\RegistroPagos.aspx.designer.cs">
       <DependentUpon>RegistroPagos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Registros\RegistroTipoAnalisis.aspx.cs">
+      <DependentUpon>RegistroTipoAnalisis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registros\RegistroTipoAnalisis.aspx.designer.cs">
+      <DependentUpon>RegistroTipoAnalisis.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

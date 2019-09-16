@@ -16,6 +16,7 @@ namespace BLL
         {
 
         }
+        
         public override bool Guardar(Analisis entity)
         {
             entity.Balance = entity.Monto;

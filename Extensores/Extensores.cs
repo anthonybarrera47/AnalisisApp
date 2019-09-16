@@ -17,6 +17,10 @@ namespace Extensores
         {
             return (Analisis)obj;
         }
+        public static TipoAnalisis ToTipoAnalisis(this object obj)
+        {
+            return (TipoAnalisis)obj;
+        }
         public static Pagos ToPago(this object obj)
         {
             return (Pagos)obj;

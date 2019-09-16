@@ -74,7 +74,7 @@
                                     <Columns>
                                         <asp:HyperLinkField ControlStyle-CssClass="btn btn-info"
                                             DataNavigateUrlFields="TipoAnalisisID"
-                                            DataNavigateUrlFormatString="~/Registros/RegistroAnalisis.aspx?TipoAnalisisID={0}"
+                                            DataNavigateUrlFormatString="~/Registros/RegistroTipoAnalisis.aspx?TipoAnalisisID={0}"
                                             Text="Editar"></asp:HyperLinkField>
                                     </Columns>
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
