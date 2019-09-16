@@ -60,7 +60,10 @@ namespace AnasilisApp.Registros
             bool paso = false;
             RepositorioPago repositorio = new RepositorioPago();
             Pagos Pagos = LlenaClase();
-            TipoAlerta Alerta = TipoAlerta.ErrorAlert;
+            TipoTitulo tipoTitulo = TipoTitulo.OperacionFallida;
+            TiposMensajes tiposMensajes = TiposMensajes.RegistroNoGuardado;
+            IconType iconType = IconType.error;
+
             if (Pagos.PagosID == 0)
                 paso = repositorio.Guardar(Pagos);
             else
@@ -68,23 +71,23 @@ namespace AnasilisApp.Registros
             if (paso)
             {
                 Limpiar();
-                Alerta = TipoAlerta.SuccessAlert;
+                tipoTitulo = TipoTitulo.OperacionExitosa;
+                tiposMensajes = TiposMensajes.RegistroGuardado;
+                iconType = IconType.success;
             }
-            //Extensores.Extensores.Alerta(this, Alerta);
+            Extensores.Extensores.Alerta(this, tipoTitulo, tiposMensajes, iconType);
         }
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
             RepositorioPago repositorio = new RepositorioPago();
             Pagos Pagos = repositorio.Buscar(PagosIdTextBox.Text.ToInt());
-            if(!Pagos.EsNulo())
+            if (!Pagos.EsNulo())
             {
                 Limpiar();
                 LlenarCampos(Pagos);
             }
             else
-            {
-                //Extensores.Extensores.Alerta(this, TipoAlerta.ErrorAlert);
-            }
+                Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
         }
         protected void EliminarButton_Click(object sender, EventArgs e)
         {
@@ -92,22 +95,21 @@ namespace AnasilisApp.Registros
             int id = PagosIdTextBox.Text.ToInt();
             if (ExisteEnLaBaseDeDatos())
             {
-                //Extensores.Extensores.Alerta(this, TipoAlerta.ErrorAlert);
+                Extensores.Extensores.Alerta(this, TipoTitulo.OperacionFallida, TiposMensajes.RegistroInexistente, IconType.error);
                 return;
             }
             else
             {
                 if (repositorio.Eliminar(id))
                 {
-                    //Extensores.Extensores.Alerta(this, TipoAlerta.SuccessAlert);
+                    Extensores.Extensores.Alerta(this, TipoTitulo.OperacionExitosa, TiposMensajes.RegistroEliminado, IconType.success);
                     Limpiar();
                 }
             }
-            
+
         }
         private void LlenarCampos(Pagos pagos)
         {
-            Limpiar();
             PagosIdTextBox.Text = pagos.PagosID.ToString();
             ViewState[KeyViewState] = pagos;
             this.BindGrid();
@@ -126,16 +128,15 @@ namespace AnasilisApp.Registros
                 return;
             if (!SumarTotalPagos())
                 return;
-            Pagos Pago = new Pagos();
-            Pago = ViewState[KeyViewState].ToPago();
-            Pago.AgregarDetalle(0, Pago.PagosID,AnalisisDropdownList.SelectedValue.ToInt(), MontoPagarTextBox.Text.ToDecimal());
+            Pagos Pago = ViewState[KeyViewState].ToPago();
+            Pago.AgregarDetalle(0, Pago.PagosID, AnalisisDropdownList.SelectedValue.ToInt(), MontoPagarTextBox.Text.ToDecimal());
             ViewState[KeyViewState] = Pago;
             this.BindGrid();
             MontoPagarTextBox.Text = string.Empty;
         }
         protected void AnalisisDropdownList_TextChanged(object sender, EventArgs e)
         {
-            if(AnalisisDropdownList.Items.Count>0)
+            if (AnalisisDropdownList.Items.Count > 0)
             {
                 int AnalisisID = AnalisisDropdownList.SelectedValue.ToInt();
                 RepositorioAnalisis repositorio = new RepositorioAnalisis();
@@ -150,10 +151,11 @@ namespace AnasilisApp.Registros
         {
             bool paso = false;
             Pagos Pagos = ViewState[KeyViewState].ToPago();
+            Analisis analisis = new RepositorioAnalisis().Buscar(AnalisisDropdownList.SelectedValue.ToInt());
             decimal Total = 0;
             Pagos.DetallesPagos.ForEach(x => Total += x.Monto);
             Total += MontoPagarTextBox.Text.ToDecimal();
-            paso = Total <= BalanceTextBox.Text.ToDecimal() ? true:false;
+            paso = Total <= analisis.Monto ? true : false;
             return paso;
         }
         private bool Validar()
@@ -161,14 +163,14 @@ namespace AnasilisApp.Registros
             bool paso = true;
             if (AnalisisDropdownList.Items.Count == 0)
                 paso = false;
-            if(ViewState[KeyViewState].ToPago().DetallesPagos.Count()==0)
+            if (ViewState[KeyViewState].ToPago().DetallesPagos.Count() == 0)
                 paso = false;
             return paso;
         }
         private bool ExisteEnLaBaseDeDatos()
         {
             RepositorioPago repositorio = new RepositorioPago();
-            Pagos pagos= repositorio.Buscar(PagosIdTextBox.Text.ToInt());
+            Pagos pagos = repositorio.Buscar(PagosIdTextBox.Text.ToInt());
             return pagos.EsNulo();
         }
         protected void DetalleGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)

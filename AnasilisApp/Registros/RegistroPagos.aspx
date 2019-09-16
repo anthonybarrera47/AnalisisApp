@@ -80,7 +80,7 @@
                                     CssClass="table table-condensed table-bordered table-responsive"
                                     CellPadding="4" ForeColor="#333333" GridLines="None"
                                     OnPageIndexChanging="DetalleGridView_PageIndexChanging"
-                                     AllowPaging="true" PageSize="5">
+                                     AllowPaging="true" PageSize="6">
                                     <AlternatingRowStyle BackColor="LightBlue" />
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                                     <RowStyle BackColor="#EFF3FB" />

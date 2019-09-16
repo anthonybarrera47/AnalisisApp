@@ -13,6 +13,8 @@ namespace AnasilisApp.Consultas
 {
     public partial class ConsultaTipoAnalisis : System.Web.UI.Page
     {
+
+        List<TipoAnalisis> lista = new List<TipoAnalisis>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!Page.IsPostBack)
@@ -46,13 +48,36 @@ namespace AnasilisApp.Consultas
             }
             DateTime fechaDesde = FechaDesdeTextBox.Text.ToDatetime();
             DateTime FechaHasta = FechaHastaTextBox.Text.ToDatetime();
-            List<TipoAnalisis> lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro.Date >= fechaDesde.Date && x.FechaRegistro.Date <= FechaHasta.Date).ToList();
+            if (FechaCheckBox.Checked)
+                lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro.Date >= fechaDesde.Date && x.FechaRegistro.Date <= FechaHasta.Date).ToList();
+            else
+                lista = repositorio.GetList(filtro);
             this.BindGrid(lista);
         }
         private void BindGrid(List<TipoAnalisis> lista)
         {
             DatosGridView.DataSource = lista;
             CAntidadTextBox.Text = lista.Count.ToString();
+            DatosGridView.DataBind();
+        }
+        protected void FechaCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (FechaCheckBox.Checked)
+            {
+                FechaDesdeTextBox.Visible = true;
+                FechaHastaTextBox.Visible = true;
+            }
+            else
+            {
+                FechaDesdeTextBox.Visible = false;
+                FechaHastaTextBox.Visible = false;
+            }
+        }
+
+        protected void DatosGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            DatosGridView.DataSource = lista;
+            DatosGridView.PageIndex = e.NewPageIndex;
             DatosGridView.DataBind();
         }
     }

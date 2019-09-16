@@ -20,6 +20,15 @@ namespace AnasilisApp.Registros
                 FechaTextBox.Text = DateTime.Now.ToFormatDate();
                 ViewState[KeyViewState] = new Analisis();
                 LlenarCombo();
+                int id = Request.QueryString["AnalisisID"].ToInt();
+                if (id > 0)
+                {
+                    var Analisis = new RepositorioAnalisis().Buscar(id);
+                    if (Analisis.EsNulo())
+                        Extensores.Extensores.Alerta(this, TipoTitulo.Informacion, TiposMensajes.RegistroNoEncontrado, IconType.info);
+                    else
+                        LlenarCampos(Analisis);
+                }
             }
         }
         private void LlenarCombo()

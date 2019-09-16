@@ -13,12 +13,15 @@ namespace AnasilisApp.Consultas
 {
     public partial class ConsultaAnalisis : System.Web.UI.Page
     {
+
+        List<Analisis> lista = new List<Analisis>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
                 FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
+                
             }
 
         }
@@ -27,7 +30,6 @@ namespace AnasilisApp.Consultas
         {
             Expression<Func<Analisis, bool>> filtro = x => true;
             RepositorioBase<Analisis> repositorio = new RepositorioBase<Analisis>();
-            List<Analisis> lista = new List<Analisis>();
             int id;
             switch (BuscarPorDropDownList.SelectedIndex)
             {
@@ -70,7 +72,12 @@ namespace AnasilisApp.Consultas
                 FechaDesdeTextBox.Visible = false;
                 FechaHastaTextBox.Visible = false;
             }
-
+        }
+        protected void DatosGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            DatosGridView.DataSource = lista;
+            DatosGridView.PageIndex = e.NewPageIndex;
+            DatosGridView.DataBind();
         }
     }
 }

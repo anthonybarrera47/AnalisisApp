@@ -68,7 +68,7 @@ namespace BLL
             Contexto db = new Contexto();
             try
             {
-                analisis = db.Analisis.Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
+                analisis = db.Analisis.AsNoTracking().Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
             }
             catch (Exception)
             { throw; }

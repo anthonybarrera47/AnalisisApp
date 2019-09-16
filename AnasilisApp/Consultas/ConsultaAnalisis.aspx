@@ -12,10 +12,10 @@
     <div class="container-fluid">
         <div class="card text-center bg-light mb-3">
             <div class="card-header"><%:Page.Title %></div>
-            <div class="card-body">
+            <div class="card-body align-items-center">
                 <div class="form-horizontal col-md-12" role="form">
                     <div>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-6">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="FiltroDropDownList">Filtro </span>
                             </div>
@@ -30,7 +30,7 @@
                                 <span class="input-group-text" id="CriterioLB">Criterio </span>
                             </div>
                             <div class="input-group-append" aria-describedby="CriterioLB">
-                                <asp:TextBox ID="FiltroTextBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                                <asp:TextBox ID="FiltroTextBox" runat="server" CssClass="form-control col-md-"></asp:TextBox>
                             </div>
                             <div class="input-group-append" aria-describedby="FiltroTextBox">
                                 <asp:Button ID="BuscarButton" runat="server" Class="btn btn-success input-sm" Text="Buscar" OnClick="BuscarButton_Click" />
@@ -59,27 +59,38 @@
                         </div>
                     </div>
                     <%--GRID--%>
-                    <div class="table table-condensed table-bordered table-responsive">
-                        <asp:GridView ID="DatosGridView"
-                            runat="server"
-                            CssClass="table table-condensed table-bordered table-responsive"
-                            CellPadding="4" ForeColor="#333333" GridLines="None">
+                    <asp:ScriptManager runat="server" ID="ScriptManager"></asp:ScriptManager>
+                    <asp:UpdatePanel ID="UpdatePanel" runat="server">
+                        <ContentTemplate>
+                            <div class="row">
+                                <div class="table table-responsive">
+                                    <asp:GridView ID="DatosGridView"
+                                        runat="server"
+                                        CssClass="table table-condensed table-bordered table-responsive"
+                                        CellPadding="4" ForeColor="#333333" 
+                                        OnPageIndexChanging="DatosGridView_PageIndexChanging"
+                                        AllowPaging="true" PageSize="6"
+                                        GridLines="None">
 
-                            <AlternatingRowStyle BackColor="LightBlue" />
+                                        <AlternatingRowStyle BackColor="LightBlue" />
 
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <RowStyle BackColor="#EFF3FB" />
-                            <Columns>
-                                <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
-                                    <ItemTemplate>
-                                        <asp:Button ID="EditarAnalisis" runat="server" CausesValidation="false" CommandName="Select"
-                                            Text="Editar" class="btn btn-danger btn-sm" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
+                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                        <RowStyle BackColor="#EFF3FB" />
+                                        <Columns>
+                                            <asp:HyperLinkField ControlStyle-CssClass="btn btn-info"
+                                                DataNavigateUrlFields="AnalisisID"
+                                                DataNavigateUrlFormatString="~/Registros/RegistroAnalisis.aspx?AnalisisID={0}"
+                                                Text="Editar"></asp:HyperLinkField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="DatosGridView" />
+                        </Triggers>
+                    </asp:UpdatePanel>
 
-                    </div>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="Cantidad">Cantidad </span>

@@ -16,127 +16,105 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid">
-        <div class="card text-center bg-light mb-3">
+        <div class="card text-center bg-light">
             <div class="card-header"><%:Page.Title %></div>
-            <div class="card-body">
-                <div class="form-horizontal col-md-12" role="form">
-                    <%--AnalisisID--%>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="AnalisisID">AnalisisID </span>
-                        </div>
-                        <div aria-describedby="AnalisisID">
-                            <asp:TextBox ID="AnalisisIdTextBox" TextMode="Number" MaxLength="9" runat="server" Text="0" class="form-control input-sm"></asp:TextBox>
-                        </div>
-                        <div class="input-group-append">
-                            <asp:Button Text="Buscar" class="btn btn-info" runat="server" ID="BuscarButton" OnClick="BuscarButton_Click" />
-                        </div>
+            <div class="card-body text-center">
+                <%--AnalisisID--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">AnalisisID </span>
                     </div>
-                    <%--Paciente--%>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="Paciente">Paciente </span>
-                        </div>
-                        <div aria-describedby="PacientesDropdownList">
-                            <asp:DropDownList ID="PacientesDropdownList" CssClass=" form-control dropdown-item" AppendDataBoundItems="true" runat="server" Height="2.5em">
-                            </asp:DropDownList>
-                        </div>
-                        <%--AgregarPaciente--%>
-                        <div class="input-group-append">
-                            <!-- Button trigger modal -->
-                            <div class="col-md-4 input-group-append" aria-describedby="TipoAnalisisDropdonwList">
-                                <button aria-describedby="TipoAnalisisDropdonwList" type="button" class="btn btn-info" data-toggle="modal" data-target="#ModalPacientes" runat="server">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <%--TipoAnalisis--%>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="TipoAnalisis">Tipo de analisis </span>
-                        </div>
-                        <%--TipoAnalisisDropdonwList--%>
-                        <div aria-describedby="TipoAnalisisDropdonwList">
-                            <asp:DropDownList ID="TipoAnalisisDropdonwList" CssClass=" form-control dropdown-toggle-split" AppendDataBoundItems="true" runat="server" Height="2.5em">
-                            </asp:DropDownList>
-                        </div>
-                        <%--AgregarAnalisis--%>
-                        <div class="input-group-append">
-                            <!-- Button trigger modal -->
-                            <div class="col-md-4 input-group-append" aria-describedby="TipoAnalisisDropdonwList">
-                                <button aria-describedby="TipoAnalisisDropdonwList" type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" runat="server">+</button>
-                                <%--<asp:Button Text="Agregar" class="btn btn-info" runat="server" ID="Button1" data-toggle="modal" data-target="#myModal" />--%>
-                            </div>
-                        </div>
+                    <asp:TextBox ID="AnalisisIdTextBox" TextMode="Number" MaxLength="9" runat="server" Text="0" class="form-control input-sm col-md-3"></asp:TextBox>
+                    <asp:Button Text="Buscar" class="btn btn-info" runat="server" ID="BuscarButton" OnClick="BuscarButton_Click" />
+                </div>
 
-                        <%--Resultados--%>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ResultadoAnalisis">Resultado </span>
-                        </div>
-                        <div class="input-group-append" aria-describedby="ResultadoAnalisisTextBox">
-                            <asp:TextBox ID="ResultadoAnalisisTextBox" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
-                        <%--AgregarDetalle--%>
-                        <div class="col-md-4 input-group-append" aria-describedby="AgregarDetalleButton">
-                            <asp:Button Text="Agregar" class="btn btn-info" runat="server" ID="AgregarDetalleButton" OnClick="AgregarDetalleButton_Click" />
-                        </div>
+                <%--Paciente--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Paciente </span>
                     </div>
-                    <%--Fecha--%>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="Fecha">Fecha </span>
-                        </div>
-                        <div class="input-group-append" aria-describedby="Fecha">
-                            <asp:TextBox ID="FechaTextBox" TextMode="Date" runat="server" class="form-control input-sm" Visible="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <%--GRID--%>
-                    <asp:ScriptManager ID="ScriptManger" runat="server"></asp:ScriptManager>
-                    <asp:UpdatePanel ID="UpdatePanel" runat="server">
-                        <ContentTemplate>
-                            <div class="row">
-                                <div class="table table-responsive">
-                                    <asp:GridView ID="DetalleGridView"
-                                        runat="server"
-                                        CssClass="table table-condensed table-bordered table-responsive"
-                                        CellPadding="4" ForeColor="#333333" GridLines="None"
-                                        OnPageIndexChanging="DetalleGridView_PageIndexChanging"
-                                        AllowPaging="true" PageSize="5">
-                                        <AlternatingRowStyle BackColor="LightBlue" />
-                                        <Columns>
-                                            <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
-                                                <ItemTemplate>
-                                                    <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
-                                                        Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                        <RowStyle BackColor="#EFF3FB" />
-                                    </asp:GridView>
-                                </div>
-                            </div>
-                        </ContentTemplate>
-                        <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="DetalleGridView" />
-                        </Triggers>
-                    </asp:UpdatePanel>
+                    <asp:DropDownList ID="PacientesDropdownList" CssClass=" form-control dropdown-item col-md-3" AppendDataBoundItems="true" runat="server" Height="2.5em">
+                    </asp:DropDownList>
+                    <%--AgregarPaciente--%>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ModalPacientes" runat="server">Nuevo</button>
+                </div>
 
-                    <%--Monto--%>
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="MontoLB">Monto </span>
-                        </div>
-                        <div aria-describedby="MontoLB">
-                            <asp:TextBox AutoPostBack="true" ID="MontoTextBox" ReadOnly="true" runat="server" class="form-control input-sm"></asp:TextBox>
-                        </div>
-                        <%--Balance--%>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="BalanceLB">Balance </span>
-                        </div>
-                        <div aria-describedby="BalanceLB">
-                            <asp:TextBox ID="BalanceTextBox" ReadOnly="true" runat="server" class="form-control input-sm"></asp:TextBox>
-                        </div>
+                <%--TipoAnalisis--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Tipo de analisis </span>
                     </div>
+                    <%--TipoAnalisisDropdonwList--%>
+                    <asp:DropDownList ID="TipoAnalisisDropdonwList" CssClass=" form-control dropdown-item col-md-3" AppendDataBoundItems="true" runat="server" Height="2.5em">
+                    </asp:DropDownList>
+                    <%--AgregarAnalisis--%>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" runat="server">Nuevo</button>
+                </div>
+
+                <%--Resultados--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="ResultadoAnalisis">Resultado </span>
+                    </div>
+                    <asp:TextBox ID="ResultadoAnalisisTextBox" runat="server" CssClass="form-control col-md-3"></asp:TextBox>
+
+                    <%--AgregarDetalle--%>
+                    <asp:Button Text="Agregar" class="btn btn-info" runat="server" ID="AgregarDetalleButton" OnClick="AgregarDetalleButton_Click" />
+                </div>
+
+                <%--Fecha--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="Fecha">Fecha </span>
+                    </div>
+                    <asp:TextBox ID="FechaTextBox" TextMode="Date" runat="server" class="form-control input-sm col-md-3" Visible="true"></asp:TextBox>
+                </div>
+
+                <%--GRID--%>
+                <asp:ScriptManager ID="ScriptManger" runat="server"></asp:ScriptManager>
+                <asp:UpdatePanel ID="UpdatePanel" runat="server">
+                    <ContentTemplate>
+                        <div class="row">
+                            <div class="table table-responsive col-md-12">
+                                <asp:GridView ID="DetalleGridView"
+                                    runat="server"
+                                    CssClass="table table-condensed table-bordered table-responsive"
+                                    CellPadding="4" ForeColor="#333333" GridLines="None"
+                                    OnPageIndexChanging="DetalleGridView_PageIndexChanging"
+                                    AllowPaging="true" PageSize="5">
+                                    <AlternatingRowStyle BackColor="LightBlue" />
+                                    <Columns>
+                                        <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
+                                            <ItemTemplate>
+                                                <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
+                                                    Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                    <RowStyle BackColor="#EFF3FB" />
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="DetalleGridView" />
+                    </Triggers>
+                </asp:UpdatePanel>
+
+                <%--Monto--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="MontoLB">Monto </span>
+                    </div>
+                    <asp:TextBox AutoPostBack="true" ID="MontoTextBox" ReadOnly="true" runat="server" class="form-control input-sm col-md-6"></asp:TextBox>
+
+                    <%--Balance--%>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="BalanceLB">Balance </span>
+                    </div>
+                    <asp:TextBox ID="BalanceTextBox" ReadOnly="true" runat="server" class="form-control input-sm col-md-6"></asp:TextBox>
+
                 </div>
             </div>
         </div>

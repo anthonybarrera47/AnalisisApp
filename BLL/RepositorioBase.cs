@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class RepositorioBase<T> : IRepository<T> where T : class
+    public class RepositorioBase<T> : IDisposable,IRepository<T> where T : class
     {
         public RepositorioBase()
         {
@@ -30,6 +30,12 @@ namespace BLL
             { db.Dispose(); }
             return entity;
         }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual bool Eliminar(int id)
         {
             bool paso = false;
