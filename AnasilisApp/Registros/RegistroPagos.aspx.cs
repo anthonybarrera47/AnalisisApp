@@ -37,6 +37,7 @@ namespace AnasilisApp.Registros
             AnalisisDropdownList.Items.Clear();
             RepositorioAnalisis repositorioAnalisis = new RepositorioAnalisis();
             List<Analisis> lista = repositorioAnalisis.GetList(x => x.Balance > 0);
+            repositorioAnalisis.Dispose();
             AnalisisDropdownList.DataSource = lista;
             AnalisisDropdownList.DataValueField = "AnalisisID";
             AnalisisDropdownList.DataTextField = "AnalisisID";
@@ -67,7 +68,14 @@ namespace AnasilisApp.Registros
             if (Pagos.PagosID == 0)
                 paso = repositorio.Guardar(Pagos);
             else
+            {
+                if (ExisteEnLaBaseDeDatos())
+                {
+                    Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+                    return;
+                }
                 paso = repositorio.Modificar(Pagos);
+            }
             if (paso)
             {
                 Limpiar();
@@ -75,6 +83,7 @@ namespace AnasilisApp.Registros
                 tiposMensajes = TiposMensajes.RegistroGuardado;
                 iconType = IconType.success;
             }
+            repositorio.Dispose();
             Extensores.Extensores.Alerta(this, tipoTitulo, tiposMensajes, iconType);
         }
         protected void BuscarButton_Click(object sender, EventArgs e)
@@ -134,6 +143,14 @@ namespace AnasilisApp.Registros
             this.BindGrid();
             MontoPagarTextBox.Text = string.Empty;
         }
+        protected void RemoverDetalleClick_Click(object sender, EventArgs e)
+        {
+            Pagos Pagos = ViewState[KeyViewState].ToPago();
+            GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
+            Pagos.RemoverDetalle(row.RowIndex);
+            ViewState[KeyViewState] = Pagos;
+            this.BindGrid();
+        }
         protected void AnalisisDropdownList_TextChanged(object sender, EventArgs e)
         {
             if (AnalisisDropdownList.Items.Count > 0)
@@ -145,6 +162,7 @@ namespace AnasilisApp.Registros
                 Pacientes paciente = repositorioPaciente.Buscar(analisis.PacienteID);
                 PacienteNombreBox.Text = paciente.Nombre;
                 BalanceTextBox.Text = analisis.Balance.ToString();
+                repositorio.Dispose();
             }
         }
         private bool SumarTotalPagos()
@@ -171,6 +189,7 @@ namespace AnasilisApp.Registros
         {
             RepositorioPago repositorio = new RepositorioPago();
             Pagos pagos = repositorio.Buscar(PagosIdTextBox.Text.ToInt());
+            repositorio.Dispose();
             return pagos.EsNulo();
         }
         protected void DetalleGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -180,5 +199,6 @@ namespace AnasilisApp.Registros
             DetalleGridView.PageIndex = e.NewPageIndex;
             DetalleGridView.DataBind();
         }
+       
     }
 }

@@ -16,6 +16,10 @@ namespace BLL
         {
             
         }
+        ~RepositorioBase()
+        {
+
+        }
         public virtual T Buscar(int id)
         {
             T entity;
@@ -33,7 +37,7 @@ namespace BLL
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
 
         public virtual bool Eliminar(int id)

@@ -22,7 +22,9 @@ namespace BLL
                 Analisis.Balance -= item.Monto;
                 db.Entry(Analisis).State = System.Data.Entity.EntityState.Modified;
             }
+
             bool paso = db.SaveChanges() > 0;
+            repositorio.Dispose();
             if (paso)
             {
                 db.Dispose();
@@ -45,12 +47,16 @@ namespace BLL
                     {
                         if (!entity.DetallesPagos.Exists(x => x.DetallePagoID == item.DetallePagoID))
                         {
-                            var Analisis = new RepositorioAnalisis().Buscar(item.AnalisisID);
+                            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+                            var Analisis = repositorio.Buscar(item.AnalisisID);
                             Analisis.Balance += item.Monto;
-                            contexto.Entry(item).State = EntityState.Modified;
+                            contexto.Entry(item).State = EntityState.Deleted;
+                            contexto.Entry(Analisis).State = EntityState.Modified;
                             flag = true;
+                            repositorio.Dispose();
                         }
                     }
+                    
                     if (flag)
                         contexto.SaveChanges();
                     contexto.Dispose();
@@ -61,10 +67,12 @@ namespace BLL
                     var estado = EntityState.Unchanged;
                     if (item.DetallePagoID == 0)
                     {
-                        var Analisis = new RepositorioAnalisis().Buscar(item.AnalisisID);
+                        RepositorioAnalisis repositorio = new RepositorioAnalisis();
+                        var Analisis = repositorio.Buscar(item.AnalisisID);
                         Analisis.Balance -= item.Monto;
                         estado = EntityState.Added;
-                        db.Entry(Analisis).State = EntityState.Modified;   
+                        db.Entry(Analisis).State = EntityState.Modified;
+                        repositorio.Dispose();
                     }
                     db.Entry(item).State = estado;
                 }
@@ -73,6 +81,8 @@ namespace BLL
             }
             catch (Exception)
             { throw; }
+            finally
+            { db.Dispose(); }
             return paso;
         }
         public override Pagos Buscar(int id)
@@ -103,6 +113,7 @@ namespace BLL
                 db.Entry(Analisis).State = System.Data.Entity.EntityState.Modified;
             }
             bool paso = db.SaveChanges() > 0;
+            repositorio.Dispose();
             if (paso)
             {
                 db.Dispose();

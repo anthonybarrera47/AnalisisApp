@@ -81,6 +81,14 @@
                                     CellPadding="4" ForeColor="#333333" GridLines="None"
                                     OnPageIndexChanging="DetalleGridView_PageIndexChanging"
                                      AllowPaging="true" PageSize="6">
+                                    <Columns>
+                                        <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
+                                            <ItemTemplate>
+                                                <asp:Button ID="RemoverDetalleClick" runat="server" CausesValidation="false" CommandName="Select"
+                                                    Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
                                     <AlternatingRowStyle BackColor="LightBlue" />
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                                     <RowStyle BackColor="#EFF3FB" />

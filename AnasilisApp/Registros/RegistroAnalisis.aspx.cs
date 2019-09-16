@@ -126,7 +126,14 @@ namespace AnasilisApp.Registros
             if (analisis.AnalisisID == 0)
                 paso = repositorio.Guardar(analisis);
             else
+            {
+                if (ExisteEnLaBaseDeDatos())
+                {
+                    Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+                    return;
+                }
                 paso = repositorio.Modificar(analisis);
+            }
 
             if (paso)
             {
@@ -223,6 +230,7 @@ namespace AnasilisApp.Registros
         {
             RepositorioBase<Analisis> repositorio = new RepositorioBase<Analisis>();
             Analisis analisis = repositorio.Buscar(AnalisisIdTextBox.Text.ToInt());
+            repositorio.Dispose();
             return analisis.EsNulo();
         }
        

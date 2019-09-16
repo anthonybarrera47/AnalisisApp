@@ -27,5 +27,9 @@ namespace Entidades
         {
             DetallesPagos.Add(new DetallesPagos(DetallesPagoID, PagosID, AnalisisID, Monto));
         }
+        public void RemoverDetalle(int Index)
+        {
+            this.DetallesPagos.RemoveAt(Index);
+        }
     }
 }
