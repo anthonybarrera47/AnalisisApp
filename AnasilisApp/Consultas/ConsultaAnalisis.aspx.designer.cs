@@ -103,6 +103,15 @@ namespace AnasilisApp.Consultas {
         protected global::System.Web.UI.WebControls.TextBox CAntidadTextBox;
         
         /// <summary>
+        /// ImprimirButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ImprimirButton;
+        
+        /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
@@ -119,5 +128,14 @@ namespace AnasilisApp.Consultas {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView DetalleDatosGridView;
+        
+        /// <summary>
+        /// AnalisisReportViewer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Microsoft.Reporting.WebForms.ReportViewer AnalisisReportViewer;
     }
 }

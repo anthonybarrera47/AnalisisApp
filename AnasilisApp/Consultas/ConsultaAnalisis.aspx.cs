@@ -1,6 +1,7 @@
 ﻿using BLL;
 using Entidades;
 using Extensores;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -48,6 +49,7 @@ namespace AnasilisApp.Consultas
                 lista = repositorio.GetList(filtro).Where(x => x.FechaRegistro >= fechaDesde && x.FechaRegistro <= FechaHasta).ToList();
             else
                 lista = repositorio.GetList(filtro);
+            repositorio.Dispose();
             this.BindGrid(lista);
         }
         private void BindGrid(List<Analisis> lista)
@@ -62,8 +64,10 @@ namespace AnasilisApp.Consultas
             dt.Columns.Add("FechaRegistro", typeof(DateTime));
             foreach (var item in lista)
             {
-                dt.Rows.Add(item.AnalisisID, item.PacienteID, new RepositorioBase<Pacientes>().Buscar(item.PacienteID).Nombre,
+                RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
+                dt.Rows.Add(item.AnalisisID, item.PacienteID, repositorio.Buscar(item.PacienteID).Nombre,
                          item.Balance, item.Monto, item.FechaRegistro);
+                repositorio.Dispose();
             }
             DatosGridView.DataSource = dt;
             DatosGridView.Columns[3].Visible = false;
@@ -98,7 +102,8 @@ namespace AnasilisApp.Consultas
             GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
             var analisis = lista.ElementAt(row.RowIndex);
             DetalleDatosGridView.DataSource = null;
-            List<DetalleAnalisis> Details = new RepositorioAnalisis().Buscar(analisis.AnalisisID).DetalleAnalisis;
+            RepositorioAnalisis Repositorio = new RepositorioAnalisis();
+            List<DetalleAnalisis> Details = Repositorio.Buscar(analisis.AnalisisID).DetalleAnalisis;
             DataTable dt = new DataTable();
             dt.Columns.Add("DetalleAnalisisID", typeof(int));
             dt.Columns.Add("AnalisisID", typeof(int));
@@ -108,15 +113,32 @@ namespace AnasilisApp.Consultas
             dt.Columns.Add("Resultado", typeof(string));
             foreach (var item in Details)
             {
-                var TipoAnalisis = new RepositorioBase<TipoAnalisis>().Buscar(item.TipoAnalisisID);
+                RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
+                var TipoAnalisis = repositorio.Buscar(item.TipoAnalisisID);
                 dt.Rows.Add(item.DetalleAnalisisID,item.AnalisisID,
                          item.TipoAnalisisID,TipoAnalisis.Descripcion,TipoAnalisis.Monto
                          , item.Resultado);
+                repositorio.Dispose();
             }
             DetalleDatosGridView.DataSource = dt;
             DetalleDatosGridView.Columns[1].Visible = false;
             DetalleDatosGridView.Columns[2].Visible = false;
             DetalleDatosGridView.DataBind();
+            Repositorio.Dispose();
+        }
+
+        protected void ImprimirButton_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "Popup", $"ShowReporte('Listado de Analisis');", true);
+
+            AnalisisReportViewer.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Local;
+            AnalisisReportViewer.Reset();
+            AnalisisReportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reportes\ListadoAnalisis.rdlc");
+            AnalisisReportViewer.LocalReport.DataSources.Clear();
+
+            AnalisisReportViewer.LocalReport.DataSources.Add(new ReportDataSource("Analisis",
+                                                               lista));
+            AnalisisReportViewer.LocalReport.Refresh();
         }
     }
 }

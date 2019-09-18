@@ -39,8 +39,7 @@ namespace BLL
                             contexto.Entry(item).State = EntityState.Deleted;
                         }
                     }
-                    if (!(contexto.SaveChanges() > 0))
-                        return false;
+                    contexto.SaveChanges();                        
                 }
                 foreach (var item in entity.DetalleAnalisis.ToList())
                 {
@@ -75,7 +74,6 @@ namespace BLL
             { throw; }
             finally
             { db.Dispose(); }
-            db = new Contexto();
             return analisis;
         }
         public override List<Analisis> GetList(Expression<Func<Analisis, bool>> expression)

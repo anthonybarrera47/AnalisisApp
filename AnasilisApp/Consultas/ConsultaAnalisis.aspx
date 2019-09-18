@@ -6,21 +6,27 @@
     CodeBehind="ConsultaAnalisis.aspx.cs"
     Inherits="AnasilisApp.Consultas.ConsultaAnalisis" %>
 
-<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" 
-    Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
     <script type="text/javascript">
-        function ShowPopup(title,body) {
+        function ShowPopup(title) {
             $("#ModalDetalle .modal-title").html(title);
             $("#ModalDetalle").modal("show");
         }
     </script>
+    <script type="text/javascript">
+        function ShowReporte(title) {
+            $("#ModalReporte .modal-title").html(title);
+            $("#ModalReporte").modal("show");
+        }
+    </script>
 
+    <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+        Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
         <div class="card text-center bg-light mb-3">
             <div class="card-header"><%:Page.Title %></div>
@@ -45,7 +51,7 @@
                                 <asp:TextBox ID="FiltroTextBox" runat="server" CssClass="form-control col-md-"></asp:TextBox>
                             </div>
                             <div class="input-group-append" aria-describedby="FiltroTextBox">
-                                <asp:Button ID="BuscarButton" runat="server" Class="btn btn-success input-sm" Text="Buscar" OnClick="BuscarButton_Click" />
+                                <asp:Button ID="BuscarButton" runat="server" CssClass="btn btn-success input-sm" Text="Buscar" OnClick="BuscarButton_Click" />
                             </div>
                         </div>
                     </div>
@@ -61,13 +67,13 @@
                             <span class="input-group-text" id="FechaDesde">Desde </span>
                         </div>
                         <div class="input-group-append" aria-describedby="FechaDesdeTextBox">
-                            <asp:TextBox ID="FechaDesdeTextBox" TextMode="Date" runat="server" class="form-control input-sm" Visible="true"></asp:TextBox>
+                            <asp:TextBox ID="FechaDesdeTextBox" TextMode="Date" runat="server" CssClass="form-control input-sm" Visible="true"></asp:TextBox>
                         </div>
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="FechaHasta">Hasta </span>
                         </div>
                         <div class="input-group-append" aria-describedby="FechaHastaTextBox">
-                            <asp:TextBox ID="FechaHastaTextBox" TextMode="Date" runat="server" class="form-control input-sm" Visible="true"></asp:TextBox>
+                            <asp:TextBox ID="FechaHastaTextBox" TextMode="Date" runat="server" CssClass="form-control input-sm" Visible="true"></asp:TextBox>
                         </div>
                     </div>
                     <%--GRID--%>
@@ -95,15 +101,15 @@
                                             <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
                                                 <ItemTemplate>
                                                     <asp:Button ID="VerDetalleButton" runat="server" CausesValidation="false" CommandName="Select"
-                                                        Text="Ver Detalle" class="btn btn-danger" OnClick="VerDetalleButton_Click" />
+                                                        Text="Ver Detalle" CssClass="btn btn-danger" OnClick="VerDetalleButton_Click" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID"/>
-                                            <asp:BoundField HeaderText="PacienteID" DataField="PacienteID"/>
-                                            <asp:BoundField HeaderText="Paciente" DataField="Paciente"/>
-                                            <asp:BoundField HeaderText="Balance" DataField="Balance"/>
-                                            <asp:BoundField HeaderText="Monto" DataField="Monto"/>
-                                            <asp:BoundField HeaderText="Fecha de Registro" DataField="FechaRegistro"/>
+                                            <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID" />
+                                            <asp:BoundField HeaderText="PacienteID" DataField="PacienteID" />
+                                            <asp:BoundField HeaderText="Paciente" DataField="Paciente" />
+                                            <asp:BoundField HeaderText="Balance" DataField="Balance" />
+                                            <asp:BoundField HeaderText="Monto" DataField="Monto" />
+                                            <asp:BoundField HeaderText="Fecha de Registro" DataField="FechaRegistro" />
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -119,7 +125,10 @@
                             <span class="input-group-text" id="Cantidad">Cantidad </span>
                         </div>
                         <div aria-describedby="Cantidad">
-                            <asp:TextBox ID="CAntidadTextBox" TextMode="Number" ReadOnly="true" MaxLength="9" runat="server" Text="0" class="form-control input-sm"></asp:TextBox>
+                            <asp:TextBox ID="CAntidadTextBox" TextMode="Number" ReadOnly="true" MaxLength="9" runat="server" Text="0" CssClass="form-control input-sm"></asp:TextBox>
+                        </div>
+                        <div class="input-group-append">
+                            <asp:Button ID="ImprimirButton" runat="server" CssClass="btn btn-success input-sm" Text="Imprimir" OnClick="ImprimirButton_Click" />
                         </div>
                     </div>
                 </div>
@@ -130,7 +139,7 @@
         <div class="modal-dialog ml-sm-auto" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="AgregarPacientesLB">Agregar Pacientes Rapido!!</h5>
+                    <h5 class="modal-title" id="AgregarPacientesLB"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -149,12 +158,12 @@
                                         AllowPaging="true" PageSize="6"
                                         GridLines="None" AutoGenerateColumns="false">
                                         <Columns>
-                                            <asp:BoundField HeaderText="Detalle ID" DataField="DetalleAnalisisID"/>
-                                            <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID"/>
-                                            <asp:BoundField HeaderText="TipoAnalisisID" DataField="TipoAnalisisID"/>
-                                            <asp:BoundField HeaderText="Tipo de analisis" DataField="TipoAnalisis"/>
-                                            <asp:BoundField HeaderText="Precio" DataField="Precio"/>
-                                            <asp:BoundField HeaderText="Resultado" DataField="Resultado"/>
+                                            <asp:BoundField HeaderText="Detalle ID" DataField="DetalleAnalisisID" />
+                                            <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID" />
+                                            <asp:BoundField HeaderText="TipoAnalisisID" DataField="TipoAnalisisID" />
+                                            <asp:BoundField HeaderText="Tipo de analisis" DataField="TipoAnalisis" />
+                                            <asp:BoundField HeaderText="Precio" DataField="Precio" />
+                                            <asp:BoundField HeaderText="Resultado" DataField="Resultado" />
                                         </Columns>
                                         <AlternatingRowStyle BackColor="LightBlue" />
 
@@ -176,7 +185,7 @@
         </div>
     </div>
     <%-- El  Modal para el Reporte--%>
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="ModalReporte" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm" style="max-width: 550px!important; min-width: 550px!important">
             <div class="modal-content">
                 <div class="modal-header">
@@ -184,15 +193,15 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                 </div>
-                   <div class="modal-body">
+                </div>
+                <div class="modal-body">
                     <%--Viewer--%>
-                    <%--<rsweb:ReportViewer ID="AnalisisReportViewer" runat="server" ProcessingMode="Remote" Width="550px">
-                    </rsweb:ReportViewer>--%>
-                  </div>
+                    <rsweb:ReportViewer ID="AnalisisReportViewer" runat="server" ProcessingMode="Remote" Height="100%" Width="100%">
+                    </rsweb:ReportViewer>
+                </div>
                 <div class="modal-footer">
-                 </div>
-             </div>
-         </div>
-     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>

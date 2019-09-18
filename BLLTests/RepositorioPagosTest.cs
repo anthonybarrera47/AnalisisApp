@@ -18,8 +18,10 @@ namespace BLLTests
         public void GuardaPagos()
         {
             RepositorioPago repositorio = new RepositorioPago();
-            Pagos pagos = new Pagos();
-            pagos.FechaRegistro = DateTime.Now;
+            Pagos pagos = new Pagos
+            {
+                FechaRegistro = DateTime.Now
+            };
             pagos.AgregarDetalle(0, 0, 1, 200);
             Assert.IsTrue(repositorio.Guardar(pagos));
         }
