@@ -21,7 +21,6 @@ namespace AnasilisApp.Consultas
             {
                 FechaDesdeTextBox.Text = DateTime.Now.ToFormatDate();
                 FechaHastaTextBox.Text = DateTime.Now.ToFormatDate();
-                
             }
         }
         protected void BuscarButton_Click(object sender, EventArgs e)
@@ -94,7 +93,8 @@ namespace AnasilisApp.Consultas
         protected void VerDetalleButton_Click(object sender, EventArgs e)
         {
             string titulo = "Detalle del analisis";
-            ScriptManager.RegisterStartupScript(this.Page,this.Page.GetType(), "Popup", $"ShowPopup('{ titulo }');", true);
+            Extensores.Extensores.MostrarModal(this.Page, "ShowPopup", titulo);
+            //ScriptManager.RegisterStartupScript(this.Page,this.Page.GetType(), "Popup", $"ShowPopup('{ titulo }');", true);
             GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
             var analisis = lista.ElementAt(row.RowIndex);
             DetalleDatosGridView.DataSource = null;

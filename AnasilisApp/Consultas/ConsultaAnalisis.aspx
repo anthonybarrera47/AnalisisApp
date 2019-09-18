@@ -9,7 +9,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <script type="text/javascript">
         function ShowPopup(title, body) {
             $("#ModalDetalle .modal-title").html(title);
@@ -67,7 +68,6 @@
                         </div>
                     </div>
                     <%--GRID--%>
-                    <asp:ScriptManager runat="server" ID="ScriptManager"></asp:ScriptManager>
                     <asp:UpdatePanel ID="UpdatePanel" runat="server">
                         <ContentTemplate>
                             <div class="row">
@@ -172,4 +172,25 @@
             </div>
         </div>
     </div>
+    <%-- El  Modal para el Reporte--%>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="max-width: 550px!important; min-width: 550px!important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLebel">Reporte de Analisis</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>
+                   <div class="modal-body">
+                    <%--Viewer--%>
+<%--                    <rsweb:ReportViewer ID="AnalisisReportViewer" runat="server" ProcessingMode="Remote" Width="550px">
+                        <ServerReport ReportPath="" ReportServerUrl="" />
+                    </rsweb:ReportViewer>--%>
+                  </div>
+                <div class="modal-footer">
+                 </div>
+             </div>
+         </div>
+     </div>
 </asp:Content>

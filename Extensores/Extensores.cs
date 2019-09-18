@@ -61,6 +61,10 @@ namespace Extensores
             ScriptManager.RegisterStartupScript(page, page.GetType(), "alert",
                             $"ToastSweetAlert('{IconTypeDescripcion}','{MensajeDescripcion}')", true);
         }
+        public static void MostrarModal(System.Web.UI.Page page,string NombreModal,string Titulo)
+        {
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "Popup", $"{NombreModal}('{ Titulo }');", true);
+        }
         static readonly string FECHA_FORMAT = "yyyy-MM-dd";
         public static string ToFormatDate(this DateTime dateTime)
         {
