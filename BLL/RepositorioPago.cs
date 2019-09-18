@@ -103,17 +103,16 @@ namespace BLL
         }
         public override bool Eliminar(int id)
         {
-            RepositorioAnalisis repositorio = new RepositorioAnalisis();
             Pagos pagos = Buscar(id);
             Contexto db = new Contexto();
-            foreach (var item in pagos.DetallesPagos.ToList())
+            foreach (var item in pagos.DetallesPagos)
             {
-                var Analisis = repositorio.Buscar(item.AnalisisID);
-                Analisis.Monto += item.Monto;
-                db.Entry(Analisis).State = System.Data.Entity.EntityState.Modified;
+                RepositorioAnalisis repositorio = new RepositorioAnalisis();
+                var Analisis = db.Analisis.Find(item.AnalisisID);
+                Analisis.Balance += item.Monto;
+                repositorio.Modificar(Analisis);
             }
-            bool paso = db.SaveChanges() > 0;
-            repositorio.Dispose();
+            bool paso = (db.SaveChanges() > 0);
             if (paso)
             {
                 db.Dispose();

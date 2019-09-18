@@ -6,13 +6,16 @@
     CodeBehind="ConsultaAnalisis.aspx.cs"
     Inherits="AnasilisApp.Consultas.ConsultaAnalisis" %>
 
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" 
+    Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <script type="text/javascript">
-        function ShowPopup(title, body) {
+        function ShowPopup(title,body) {
             $("#ModalDetalle .modal-title").html(title);
             $("#ModalDetalle").modal("show");
         }
@@ -184,8 +187,7 @@
                  </div>
                    <div class="modal-body">
                     <%--Viewer--%>
-<%--                    <rsweb:ReportViewer ID="AnalisisReportViewer" runat="server" ProcessingMode="Remote" Width="550px">
-                        <ServerReport ReportPath="" ReportServerUrl="" />
+                    <%--<rsweb:ReportViewer ID="AnalisisReportViewer" runat="server" ProcessingMode="Remote" Width="550px">
                     </rsweb:ReportViewer>--%>
                   </div>
                 <div class="modal-footer">
