@@ -84,9 +84,9 @@
       <Project>{73603373-8274-4A3C-A0F1-B78076A8DE22}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Extensores\Extensores.csproj">
-      <Project>{7E1BC5F7-F69E-4B09-86A8-FDB3E092B106}</Project>
-      <Name>Extensores</Name>
+    <ProjectReference Include="..\Herramientas\Herramientas.csproj">
+      <Project>{2DB5BA5D-E613-4817-A341-A9225734BE3E}</Project>
+      <Name>Herramientas</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

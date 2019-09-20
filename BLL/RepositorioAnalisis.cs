@@ -16,16 +16,26 @@ namespace BLL
         {
 
         }
-        
+      
         public override bool Guardar(Analisis entity)
         {
             entity.Balance = entity.Monto;
+            RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
+            Pacientes paciente = repositorio.Buscar(entity.PacienteID);
+            paciente.Balance += entity.Balance;
+            repositorio.Dispose();
+            RepositorioBase<Pacientes> RepositorioModificar = new RepositorioBase<Pacientes>();
+            RepositorioModificar.Modificar(paciente);
+            RepositorioModificar.Dispose();
             return base.Guardar(entity);
         }
         public override bool Modificar(Analisis entity)
         {
             bool paso = false;
-            var Anterior = Buscar(entity.AnalisisID);
+            Analisis Anterior = Buscar(entity.AnalisisID);
+            RepositorioBase<Pacientes> repositorioPaciente = new RepositorioBase<Pacientes>();
+            Pacientes Paciente = repositorioPaciente.Buscar(entity.PacienteID);
+            Paciente.Balance -= Anterior.Balance;
             Contexto db = new Contexto();
             try
             {
@@ -35,8 +45,12 @@ namespace BLL
                     {
                         if (!entity.DetalleAnalisis.Exists(x => x.DetalleAnalisisID == item.DetalleAnalisisID))
                         {
-                            entity.Balance -= new RepositorioBase<TipoAnalisis>().Buscar(item.TipoAnalisisID).Monto;
+                            RepositorioBase<TipoAnalisis> repositorioBase = new RepositorioBase<TipoAnalisis>();
+                            TipoAnalisis TipoAnalisis = repositorioBase.Buscar(item.TipoAnalisisID);
+                            entity.Balance -= TipoAnalisis.Monto;
                             contexto.Entry(item).State = EntityState.Deleted;
+                            entity.DetalleAnalisis.Remove(item);
+                            repositorioBase.Dispose();
                         }
                     }
                     contexto.SaveChanges();                        
@@ -51,8 +65,9 @@ namespace BLL
                     }
                     db.Entry(item).State = estado;
                 }
+                Paciente.Balance += entity.Balance;
+                repositorioPaciente.Modificar(Paciente);
                 db.Entry(entity).State = EntityState.Modified;
-
                 paso = (db.SaveChanges() > 0);
             }
             catch (Exception)
@@ -61,6 +76,16 @@ namespace BLL
             { db.Dispose(); }
 
             return paso;
+        }
+        public override bool Eliminar(int id)
+        {
+            Analisis analisis = Buscar(id);
+            RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
+            Pacientes paciente = repositorio.Buscar(analisis.PacienteID);
+            paciente.Balance -= analisis.Balance;
+            repositorio.Modificar(paciente);
+            repositorio.Dispose();
+            return base.Eliminar(id);
         }
         public override Analisis Buscar(int id)
         {

@@ -1,10 +1,9 @@
 ﻿using BLL;
 using Entidades;
 using Extensores;
+using Herramientas;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -25,7 +24,7 @@ namespace AnasilisApp.Registros
                 {
                     var Analisis = new RepositorioAnalisis().Buscar(id);
                     if (Analisis.EsNulo())
-                        Extensores.Extensores.Alerta(this, TipoTitulo.Informacion, TiposMensajes.RegistroNoEncontrado, IconType.info);
+                        Utils.Alerta(this, TipoTitulo.Informacion, TiposMensajes.RegistroNoEncontrado, IconType.info);
                     else
                         LlenarCampos(Analisis);
                 }
@@ -55,9 +54,10 @@ namespace AnasilisApp.Registros
         }
         public Analisis LLenaClase()
         {
-            Analisis Analisis = ViewState[KeyViewState].ToAnalisis();
+            Analisis Analisis = new Analisis();
+            Analisis = ViewState[KeyViewState].ToAnalisis();
             Analisis.AnalisisID = AnalisisIdTextBox.Text.ToInt();
-            Analisis.PacienteID = TipoAnalisisDropdonwList.SelectedValue.ToInt();
+            Analisis.PacienteID = PacientesDropdownList.SelectedValue.ToInt();
             Analisis.FechaRegistro = FechaTextBox.Text.ToDatetime();
             Analisis.Monto = 0;
             Analisis.DetalleAnalisis.ForEach(x => Analisis.Monto += new RepositorioBase<TipoAnalisis>().Buscar(x.TipoAnalisisID).Monto);
@@ -101,9 +101,9 @@ namespace AnasilisApp.Registros
             RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
 
             if (!string.IsNullOrEmpty(NombrePacienteTextBox.Text))
-                repositorio.Guardar(new Pacientes(0, NombrePacienteTextBox.Text, DateTime.Now));
+                repositorio.Guardar(new Pacientes(0, NombrePacienteTextBox.Text,0,DateTime.Now));
             else
-                Extensores.Extensores.Alerta(this,TipoTitulo.OperacionFallida,TiposMensajes.RegistroNoGuardado,IconType.error);
+                Utils.Alerta(this,TipoTitulo.OperacionFallida,TiposMensajes.RegistroNoGuardado,IconType.error);
             
             LlenarCombo();
         }
@@ -129,7 +129,7 @@ namespace AnasilisApp.Registros
             {
                 if (ExisteEnLaBaseDeDatos())
                 {
-                    Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+                    Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
                     return;
                 }
                 paso = repositorio.Modificar(analisis);
@@ -142,7 +142,7 @@ namespace AnasilisApp.Registros
                 tiposMensajes = TiposMensajes.RegistroGuardado;
                 iconType = IconType.success;
             }
-            Extensores.Extensores.Alerta(this, tipoTitulo, tiposMensajes, iconType);
+            Utils.Alerta(this, tipoTitulo, tiposMensajes, iconType);
         }
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
@@ -154,22 +154,22 @@ namespace AnasilisApp.Registros
                 LlenarCampos(Analisis);
             }
             else
-                Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+                Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
         }
         protected void EliminarButton_Click(object sender, EventArgs e)
         {
-            RepositorioBase<Analisis> repositorio = new RepositorioBase<Analisis>();
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
             int id = AnalisisIdTextBox.Text.ToInt();
             if (ExisteEnLaBaseDeDatos())
             {
-                Extensores.Extensores.Alerta(this,TipoTitulo.OperacionFallida,TiposMensajes.RegistroInexistente,IconType.error);
+                Utils.Alerta(this,TipoTitulo.OperacionFallida,TiposMensajes.RegistroInexistente,IconType.error);
                 return;
             }
             else
             {
                 if (repositorio.Eliminar(id))
                 {
-                    Extensores.Extensores.Alerta(this, TipoTitulo.OperacionExitosa,TiposMensajes.RegistroEliminado,IconType.success);
+                    Utils.Alerta(this, TipoTitulo.OperacionExitosa,TiposMensajes.RegistroEliminado,IconType.success);
                     Limpiar();
                 }
             }

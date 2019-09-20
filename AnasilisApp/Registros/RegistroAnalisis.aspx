@@ -27,6 +27,13 @@
                     <asp:TextBox ID="AnalisisIdTextBox" TextMode="Number" MaxLength="9" runat="server" Text="0" class="form-control input-sm col-md-3"></asp:TextBox>
                     <asp:Button Text="Buscar" class="btn btn-info" runat="server" ID="BuscarButton" OnClick="BuscarButton_Click" />
                 </div>
+                <%--Fecha--%>
+                <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="Fecha">Fecha </span>
+                    </div>
+                    <asp:TextBox ID="FechaTextBox" TextMode="Date" runat="server" class="form-control input-sm col-md-3" Visible="true"></asp:TextBox>
+                </div>
 
                 <%--Paciente--%>
                 <div class="input-group col-md-12">
@@ -62,14 +69,7 @@
                     <asp:Button Text="Agregar" class="btn btn-info" runat="server" ID="AgregarDetalleButton" OnClick="AgregarDetalleButton_Click" />
                 </div>
 
-                <%--Fecha--%>
-                <div class="input-group col-md-12">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="Fecha">Fecha </span>
-                    </div>
-                    <asp:TextBox ID="FechaTextBox" TextMode="Date" runat="server" class="form-control input-sm col-md-3" Visible="true"></asp:TextBox>
-                </div>
-
+                
                 <%--GRID--%>
                 <asp:ScriptManager ID="ScriptManger" runat="server"></asp:ScriptManager>
                 <asp:UpdatePanel ID="UpdatePanel" runat="server">

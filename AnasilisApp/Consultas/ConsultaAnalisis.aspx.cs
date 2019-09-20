@@ -1,6 +1,7 @@
 ﻿using BLL;
 using Entidades;
 using Extensores;
+using Herramientas;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
@@ -59,14 +60,14 @@ namespace AnasilisApp.Consultas
             dt.Columns.Add("AnalisisID", typeof(int));
             dt.Columns.Add("PacienteID", typeof(int));
             dt.Columns.Add("Paciente", typeof(string));
-            dt.Columns.Add("Balance", typeof(decimal));
             dt.Columns.Add("Monto", typeof(decimal));
-            dt.Columns.Add("FechaRegistro", typeof(DateTime));
+            dt.Columns.Add("Balance", typeof(decimal));
+            dt.Columns.Add("FechaRegistro", typeof(string));
             foreach (var item in lista)
             {
                 RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
                 dt.Rows.Add(item.AnalisisID, item.PacienteID, repositorio.Buscar(item.PacienteID).Nombre,
-                         item.Balance, item.Monto, item.FechaRegistro);
+                         item.Monto, item.Balance,  item.FechaRegistro.ToFormatDate());
                 repositorio.Dispose();
             }
             DatosGridView.DataSource = dt;
@@ -97,8 +98,7 @@ namespace AnasilisApp.Consultas
         protected void VerDetalleButton_Click(object sender, EventArgs e)
         {
             string titulo = "Detalle del analisis";
-            Extensores.Extensores.MostrarModal(this.Page, "ShowPopup", titulo);
-            //ScriptManager.RegisterStartupScript(this.Page,this.Page.GetType(), "Popup", $"ShowPopup('{ titulo }');", true);
+            Utils.MostrarModal(this.Page, "ShowPopup", titulo);
             GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
             var analisis = lista.ElementAt(row.RowIndex);
             DetalleDatosGridView.DataSource = null;

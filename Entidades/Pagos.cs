@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +10,9 @@ namespace Entidades
 {   [Serializable]
     public class Pagos
     {
+        [Key]
         public int PagosID { get; set; }
+        public int PacienteID { get; set; }
         public virtual List<DetallesPagos> DetallesPagos { get; set; }
         public DateTime FechaRegistro { get; set; }
         public Pagos()
@@ -23,9 +27,9 @@ namespace Entidades
             DetallesPagos = detallesPagos ?? throw new ArgumentNullException(nameof(detallesPagos));
             FechaRegistro = DateTime.Now;
         }
-        public void AgregarDetalle(int DetallesPagoID,int PagosID,int AnalisisID,decimal Monto)
+        public void AgregarDetalle(int DetallesPagoID,int PagosID,int AnalisisID,decimal Monto,string estado)
         {
-            DetallesPagos.Add(new DetallesPagos(DetallesPagoID, PagosID, AnalisisID, Monto));
+            DetallesPagos.Add(new DetallesPagos(DetallesPagoID, PagosID, AnalisisID, Monto, estado));
         }
         public void RemoverDetalle(int Index)
         {

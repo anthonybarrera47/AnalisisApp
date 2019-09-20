@@ -107,8 +107,8 @@
                                             <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID" />
                                             <asp:BoundField HeaderText="PacienteID" DataField="PacienteID" />
                                             <asp:BoundField HeaderText="Paciente" DataField="Paciente" />
-                                            <asp:BoundField HeaderText="Balance" DataField="Balance" />
                                             <asp:BoundField HeaderText="Monto" DataField="Monto" />
+                                            <asp:BoundField HeaderText="Balance" DataField="Balance" />
                                             <asp:BoundField HeaderText="Fecha de Registro" DataField="FechaRegistro" />
                                         </Columns>
                                     </asp:GridView>

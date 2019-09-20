@@ -1,6 +1,7 @@
 ﻿using BLL;
 using Entidades;
 using Extensores;
+using Herramientas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace AnasilisApp.Registros
                 {
                     var TipoAnalisis = new RepositorioBase<TipoAnalisis>().Buscar(id);
                     if (TipoAnalisis.EsNulo())
-                        Extensores.Extensores.Alerta(this, TipoTitulo.Informacion, TiposMensajes.RegistroNoEncontrado, IconType.info);
+                        Utils.Alerta(this, TipoTitulo.Informacion, TiposMensajes.RegistroNoEncontrado, IconType.info);
                     else
                         LlenarCampos(TipoAnalisis);
                 }
@@ -76,7 +77,7 @@ namespace AnasilisApp.Registros
             {
                 if (!ExisteEnLaBaseDeDatos())
                 {
-                    Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+                    Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
                     return;
                 }
                 paso = repositorio.Modificar(tipoAnalisis);
@@ -90,7 +91,7 @@ namespace AnasilisApp.Registros
                 tiposMensajes = TiposMensajes.RegistroGuardado;
                 iconType = IconType.success;
             }
-            Extensores.Extensores.Alerta(this, tipoTitulo, tiposMensajes, iconType);
+            Utils.Alerta(this, tipoTitulo, tiposMensajes, iconType);
         }
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
@@ -102,7 +103,7 @@ namespace AnasilisApp.Registros
                 LlenarCampos(tipoAnalisis);
             }
             else
-                Extensores.Extensores.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+                Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
         }
 
         protected void EliminarButton_Click(object sender, EventArgs e)
@@ -111,14 +112,14 @@ namespace AnasilisApp.Registros
             int id = TipoIdTextBox.Text.ToInt();
             if (!ExisteEnLaBaseDeDatos())
             {
-                Extensores.Extensores.Alerta(this, TipoTitulo.OperacionFallida, TiposMensajes.RegistroInexistente, IconType.error);
+                Utils.Alerta(this, TipoTitulo.OperacionFallida, TiposMensajes.RegistroInexistente, IconType.error);
                 return;
             }
             else
             {
                 if (repositorio.Eliminar(id))
                 {
-                    Extensores.Extensores.Alerta(this, TipoTitulo.OperacionExitosa, TiposMensajes.RegistroEliminado, IconType.success);
+                    Utils.Alerta(this, TipoTitulo.OperacionExitosa, TiposMensajes.RegistroEliminado, IconType.success);
                     Limpiar();
                 }
             }

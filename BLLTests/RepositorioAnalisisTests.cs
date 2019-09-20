@@ -16,21 +16,27 @@ namespace BLL.Tests
         [TestMethod()]
         public void BuscarTest()
         {
-            Analisis analisis = new RepositorioAnalisis().Buscar(2);
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+            Analisis analisis = repositorio.Buscar(2);
+            repositorio.Dispose();
             Assert.AreEqual(true, !(analisis is null));
         }
 
         [TestMethod()]
         public void EliminarTest()
         {
-            bool paso = new RepositorioAnalisis().Eliminar(2);
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+            bool paso = repositorio.Eliminar(2);
+            repositorio.Dispose();
             Assert.IsTrue(paso);
         }
 
         [TestMethod()]
         public void GetListTest()
         {
-            List<Analisis> lista = new RepositorioAnalisis().GetList(x => true);
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+            List<Analisis> lista = repositorio.GetList(x => true);
+            repositorio.Dispose();
             bool paso = (lista.Count > 0);
             Assert.IsTrue(paso);
         }
@@ -38,23 +44,26 @@ namespace BLL.Tests
         [TestMethod()]
         public void GuardarTest()
         {
-            Analisis analisis = new Analisis();
-            analisis.PacienteID = 1;
-            analisis.FechaRegistro = DateTime.Now;
+            Analisis analisis = new Analisis
+            {
+                PacienteID = 1,
+                FechaRegistro = DateTime.Now
+            };
             analisis.DetalleAnalisis.Add(new DetalleAnalisis(0, 0, 1, "Positivo"));
-            Assert.IsTrue(new RepositorioAnalisis().Guardar(analisis));
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+            bool paso = repositorio.Guardar(analisis);
+            repositorio.Dispose();
+            Assert.IsTrue(paso);
         }
 
         [TestMethod()]
         public void ModificarTest()
         {
-            Analisis analisis = new Analisis();
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
-            analisis = repositorio.Buscar(2);
+            Analisis analisis = repositorio.Buscar(2);
             analisis.DetalleAnalisis.Add(new DetalleAnalisis(0, 2, 1, "Negativo"));
-           //analisis.DetalleAnalisis.RemoveAt(0);
-            
             bool paso = repositorio.Modificar(analisis);
+            repositorio.Dispose();
             Assert.IsTrue(paso);
         }
     }

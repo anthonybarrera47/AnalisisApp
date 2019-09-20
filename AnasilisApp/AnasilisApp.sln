@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "..\Entidades\E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLLTests", "..\BLLTests\BLLTests.csproj", "{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensores", "..\Extensores\Extensores.csproj", "{7E1BC5F7-F69E-4B09-86A8-FDB3E092B106}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herramientas", "..\Herramientas\Herramientas.csproj", "{2DB5BA5D-E613-4817-A341-A9225734BE3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5CAC5A7-B0D9-4583-92D7-31D3A2E216D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E1BC5F7-F69E-4B09-86A8-FDB3E092B106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E1BC5F7-F69E-4B09-86A8-FDB3E092B106}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E1BC5F7-F69E-4B09-86A8-FDB3E092B106}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E1BC5F7-F69E-4B09-86A8-FDB3E092B106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DB5BA5D-E613-4817-A341-A9225734BE3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB5BA5D-E613-4817-A341-A9225734BE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DB5BA5D-E613-4817-A341-A9225734BE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DB5BA5D-E613-4817-A341-A9225734BE3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
