@@ -20,6 +20,16 @@ namespace AnasilisApp.Registros
             {
                 FechaTextBox.Text = DateTime.Now.ToFormatDate();
                 ViewState[KeyViewState] = new Pagos();
+                LlenarCombo();
+                int id = Request.QueryString["PagosID"].ToInt();
+                if (id > 0)
+                {
+                    var Pagos = new RepositorioPago().Buscar(id);
+                    if (Pagos.EsNulo())
+                        Utils.Alerta(this, TipoTitulo.Informacion, TiposMensajes.RegistroNoEncontrado, IconType.info);
+                    else
+                        LlenarCampos(Pagos);
+                }
             }
         }
         public void Limpiar()
@@ -29,6 +39,7 @@ namespace AnasilisApp.Registros
             BalanceTextBox.Text = string.Empty;
             ViewState[KeyViewState] = new Pagos();
             AnalisisDropDownList.Items.Clear();
+            LlenarCombo();
             this.BindGrid();
         }
         private void LlenarCombo()
@@ -67,7 +78,7 @@ namespace AnasilisApp.Registros
                 paso = repositorio.Guardar(Pagos);
             else
             {
-                if (ExisteEnLaBaseDeDatos())
+                if (!ExisteEnLaBaseDeDatos())
                 {
                     Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
                     return;
@@ -87,11 +98,17 @@ namespace AnasilisApp.Registros
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
             RepositorioPago repositorio = new RepositorioPago();
-            Pagos Pagos = repositorio.Buscar(PagosIdTextBox.Text.ToInt());
-            if (!Pagos.EsNulo())
+            int PagoId = PagosIdTextBox.Text.ToInt();
+            if (PagoId != 0)
             {
-                Limpiar();
-                LlenarCampos(Pagos);
+                Pagos Pagos = repositorio.Buscar(PagoId);
+                if (!Pagos.EsNulo())
+                {
+                    Limpiar();
+                    LlenarCampos(Pagos);
+                }
+                else
+                    Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
             }
             else
                 Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
@@ -101,7 +118,7 @@ namespace AnasilisApp.Registros
         {
             RepositorioPago repositorio = new RepositorioPago();
             int id = PagosIdTextBox.Text.ToInt();
-            if (ExisteEnLaBaseDeDatos())
+            if (!ExisteEnLaBaseDeDatos())
             {
                 Utils.Alerta(this, TipoTitulo.OperacionFallida, TiposMensajes.RegistroInexistente, IconType.error);
                 return;
@@ -121,6 +138,7 @@ namespace AnasilisApp.Registros
         {
             PagosIdTextBox.Text = pagos.PagosID.ToString();
             PacienteTextBox.Text = pagos.PacienteID.ToString();
+            BuscarPaciente_Click(null, null);
             ViewState[KeyViewState] = pagos;
             this.BindGrid();
         }
@@ -138,9 +156,12 @@ namespace AnasilisApp.Registros
             if (MontoPagarTextBox.Text.ToDecimal() <= 0)
                 return;
             if (!SumarTotalPagos())
+            {
+                Utils.ToastSweet(this.Page, IconType.info, TiposMensajes.EstaSuperandoDeuda);
                 return;
+            }
             Pagos Pago = ViewState[KeyViewState].ToPago();
-            Pago.AgregarDetalle(0, Pago.PagosID, AnalisisDropDownList.SelectedValue.ToInt(), MontoPagarTextBox.Text.ToDecimal(),"Prueba");
+            Pago.AgregarDetalle(0, Pago.PagosID, AnalisisDropDownList.SelectedValue.ToInt(), MontoPagarTextBox.Text.ToDecimal(), EsAbono());
             ViewState[KeyViewState] = Pago;
             this.BindGrid();
             MontoPagarTextBox.Text = string.Empty;
@@ -148,8 +169,26 @@ namespace AnasilisApp.Registros
         protected void RemoverDetalleClick_Click(object sender, EventArgs e)
         {
             Pagos Pagos = ViewState[KeyViewState].ToPago();
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+            Analisis analisis = new Analisis();
+            decimal Total = 0;
             GridViewRow row = (sender as Button).NamingContainer as GridViewRow;
+            int AnalisisId = Pagos.DetallesPagos.ElementAt(row.RowIndex).AnalisisID;
             Pagos.RemoverDetalle(row.RowIndex);
+            analisis = repositorio.Buscar(AnalisisId);
+            foreach (var item in Pagos.DetallesPagos)
+            {
+                if (item.AnalisisID == analisis.AnalisisID)
+                    Total += item.Monto;
+            }
+            if (analisis.Monto > Total)
+            {
+                foreach (var item in Pagos.DetallesPagos)
+                {
+                    if (item.Estado.Contains("Saldado"))
+                        item.Estado = "Abono";
+                }
+            }
             ViewState[KeyViewState] = Pagos;
             this.BindGrid();
         }
@@ -160,17 +199,35 @@ namespace AnasilisApp.Registros
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
             Analisis analisis = repositorio.Buscar(AnalisisDropDownList.SelectedValue.ToInt());
             decimal Total = 0;
-            Pagos.DetallesPagos.ForEach(x => Total += x.Monto);
+            foreach (var item in Pagos.DetallesPagos)
+            {
+                if (item.AnalisisID == analisis.AnalisisID)
+                    Total += item.Monto;
+            }
             Total += MontoPagarTextBox.Text.ToDecimal();
             paso = Total <= analisis.Monto ? true : false;
             repositorio.Dispose();
             return paso;
         }
+        private string EsAbono()
+        {
+            string retorno = string.Empty;
+            Pagos Pagos = ViewState[KeyViewState].ToPago();
+            RepositorioAnalisis repositorio = new RepositorioAnalisis();
+            Analisis analisis = repositorio.Buscar(AnalisisDropDownList.SelectedValue.ToInt());
+            decimal Total = 0;
+            foreach (var item in Pagos.DetallesPagos)
+            {
+                if (item.AnalisisID == analisis.AnalisisID)
+                    Total += item.Monto;
+            }
+            Total += MontoPagarTextBox.Text.ToDecimal();
+            retorno = Total == analisis.Monto ? "Saldado" : "Abono";
+            return retorno;
+        }
         private bool Validar()
         {
             bool paso = true;
-            if (AnalisisDropDownList.Items.Count == 0)
-                paso = false;
             if (ViewState[KeyViewState].ToPago().DetallesPagos.Count() == 0)
                 paso = false;
             return paso;
@@ -180,7 +237,7 @@ namespace AnasilisApp.Registros
             RepositorioPago repositorio = new RepositorioPago();
             Pagos pagos = repositorio.Buscar(PagosIdTextBox.Text.ToInt());
             repositorio.Dispose();
-            return pagos.EsNulo();
+            return !pagos.EsNulo();
         }
         protected void DetalleGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -192,19 +249,30 @@ namespace AnasilisApp.Registros
         protected void BuscarPaciente_Click(object sender, EventArgs e)
         {
             RepositorioBase<Pacientes> repositorioBase = new RepositorioBase<Pacientes>();
-            if(!repositorioBase.Buscar(PacienteTextBox.Text.ToInt()).EsNulo())
+            if (!repositorioBase.Buscar(PacienteTextBox.Text.ToInt()).EsNulo())
             {
                 LlenarCombo();
                 AnalisisDropDownList_SelectedIndexChanged(null, null);
             }
+            else
+                Limpiar();
+
         }
         protected void AnalisisDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
-            List<Analisis> ListaAnalisis = repositorio.GetList(x=>true);
+            int PacienteId = PacienteTextBox.Text.ToInt();
+            List<Analisis> ListaAnalisis = repositorio.GetList(x => x.PacienteID == PacienteId);
+            BalanceTextBox.Text = string.Empty;
             int AnalisisId = AnalisisDropDownList.SelectedValue.ToInt();
             var Analisis = ListaAnalisis.Find(x => x.AnalisisID == AnalisisId);
-            BalanceTextBox.Text = Analisis.Balance.ToString();
+            if (!Analisis.EsNulo())
+                BalanceTextBox.Text = Analisis.Balance.ToString();
+        }
+
+        protected void PacienteTextBox_TextChanged(object sender, EventArgs e)
+        {
+            BuscarPaciente_Click(null, null);
         }
     }
 }

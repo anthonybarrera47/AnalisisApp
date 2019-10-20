@@ -21,6 +21,8 @@ namespace DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            
         }
     }
 }

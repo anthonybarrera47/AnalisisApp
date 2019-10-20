@@ -76,7 +76,7 @@
                             <div class="dropdown-menu" aria-labelledby="ConsultasNavbarDropDown">
                                 <a class="dropdown-item" runat="server" href="~/Consultas/ConsultaAnalisis.aspx">Analisis</a>
                                 <a class="dropdown-item" runat="server" href="~/Consultas/ConsultaTipoAnalisis.aspx">Tipo de Analisis</a>
-                                <a class="dropdown-item" runat="server" href="~/Reportes/RptViewer.aspx">reporte</a>
+                                <a class="dropdown-item" runat="server"  href="Consultas/ConsultaPagos.aspx">Pagos</a>
                             </div>
                         </li>
                     </ul>

@@ -93,7 +93,7 @@ namespace AnasilisApp.Registros
 
             if (!string.IsNullOrEmpty(DescripcionAnalisisTextBox.Text) && PrecioAnalisisTexBox.Text.ToDecimal() > 0)
                 repositorio.Guardar(new TipoAnalisis(0, DescripcionAnalisisTextBox.Text, PrecioAnalisisTexBox.Text.ToDecimal(), DateTime.Now.ToDatetime()));
-            
+
             LlenarCombo();
         }
         protected void AgregarPacientesButton_Click(object sender, EventArgs e)
@@ -101,10 +101,10 @@ namespace AnasilisApp.Registros
             RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
 
             if (!string.IsNullOrEmpty(NombrePacienteTextBox.Text))
-                repositorio.Guardar(new Pacientes(0, NombrePacienteTextBox.Text,0,DateTime.Now));
+                repositorio.Guardar(new Pacientes(0, NombrePacienteTextBox.Text, 0, DateTime.Now));
             else
-                Utils.Alerta(this,TipoTitulo.OperacionFallida,TiposMensajes.RegistroNoGuardado,IconType.error);
-            
+                Utils.Alerta(this, TipoTitulo.OperacionFallida, TiposMensajes.RegistroNoGuardado, IconType.error);
+
             LlenarCombo();
         }
         protected void NuevoButton_Click(object sender, EventArgs e)
@@ -147,14 +147,21 @@ namespace AnasilisApp.Registros
         protected void BuscarButton_Click(object sender, EventArgs e)
         {
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
-            Analisis Analisis = repositorio.Buscar(AnalisisIdTextBox.Text.ToInt());
-            if (!Analisis.EsNulo())
+            int AnalisiId = AnalisisIdTextBox.Text.ToInt();
+            if (AnalisiId != 0)
             {
-                Limpiar();
-                LlenarCampos(Analisis);
+                Analisis Analisis = repositorio.Buscar(AnalisiId);
+                if (!Analisis.EsNulo())
+                {
+                    Limpiar();
+                    LlenarCampos(Analisis);
+                }
+                else
+                    Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
             }
             else
                 Utils.ToastSweet(this, IconType.info, TiposMensajes.RegistroNoEncontrado);
+
         }
         protected void EliminarButton_Click(object sender, EventArgs e)
         {
@@ -162,14 +169,14 @@ namespace AnasilisApp.Registros
             int id = AnalisisIdTextBox.Text.ToInt();
             if (ExisteEnLaBaseDeDatos())
             {
-                Utils.Alerta(this,TipoTitulo.OperacionFallida,TiposMensajes.RegistroInexistente,IconType.error);
+                Utils.Alerta(this, TipoTitulo.OperacionFallida, TiposMensajes.RegistroInexistente, IconType.error);
                 return;
             }
             else
             {
                 if (repositorio.Eliminar(id))
                 {
-                    Utils.Alerta(this, TipoTitulo.OperacionExitosa,TiposMensajes.RegistroEliminado,IconType.success);
+                    Utils.Alerta(this, TipoTitulo.OperacionExitosa, TiposMensajes.RegistroEliminado, IconType.success);
                     Limpiar();
                 }
             }
@@ -179,7 +186,9 @@ namespace AnasilisApp.Registros
             if (string.IsNullOrEmpty(ResultadoAnalisisTextBox.Text))
                 return;
             Analisis analisis = ViewState[KeyViewState].ToAnalisis();
-            analisis.AgregarDetalle(0, analisis.AnalisisID, TipoAnalisisDropdonwList.SelectedValue.ToInt(), ResultadoAnalisisTextBox.Text);
+            RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
+            TipoAnalisis TipoAnalisis = repositorio.Buscar(TipoAnalisisDropdonwList.SelectedValue.ToInt());
+            analisis.AgregarDetalle(0, analisis.AnalisisID, TipoAnalisis.TipoAnalisisID, TipoAnalisis.Descripcion, ResultadoAnalisisTextBox.Text);
             ViewState[KeyViewState] = analisis;
             this.BindGrid();
             Calcular();
@@ -207,7 +216,7 @@ namespace AnasilisApp.Registros
             ViewState[KeyViewState] = analisis;
             this.BindGrid();
         }
-        
+
         protected void DetalleGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             Analisis analisis = ViewState[KeyViewState].ToAnalisis();
@@ -233,7 +242,7 @@ namespace AnasilisApp.Registros
             repositorio.Dispose();
             return analisis.EsNulo();
         }
-       
-        
+
+
     }
 }

@@ -13,19 +13,29 @@ namespace Entidades
         [Key]
         public int PagosID { get; set; }
         public int PacienteID { get; set; }
+        [NotMapped]
+        public string NombrePaciente { get; set; }
         public virtual List<DetallesPagos> DetallesPagos { get; set; }
+        [NotMapped]
+        public decimal TotalPagado { get; set; }
         public DateTime FechaRegistro { get; set; }
         public Pagos()
         {
             PagosID = 0;
+            PacienteID = 0;
             DetallesPagos = new List<DetallesPagos>();
             FechaRegistro = DateTime.Now;
+            NombrePaciente = string.Empty;
+            TotalPagado = 0;
         }
-        public Pagos(int pagosID, List<DetallesPagos> detallesPagos)
+        public Pagos(int pagosID,int pacienteId,decimal totalPagado, List<DetallesPagos> detallesPagos)
         {
             PagosID = pagosID;
+            PacienteID = pacienteId;
+            NombrePaciente = string.Empty;
             DetallesPagos = detallesPagos ?? throw new ArgumentNullException(nameof(detallesPagos));
             FechaRegistro = DateTime.Now;
+            TotalPagado = totalPagado;
         }
         public void AgregarDetalle(int DetallesPagoID,int PagosID,int AnalisisID,decimal Monto,string estado)
         {
@@ -35,5 +45,6 @@ namespace Entidades
         {
             this.DetallesPagos.RemoveAt(Index);
         }
+        
     }
 }

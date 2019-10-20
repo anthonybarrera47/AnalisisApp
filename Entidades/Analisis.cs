@@ -40,9 +40,9 @@ namespace Entidades
             DetalleAnalisis = detalleAnalisis ?? throw new ArgumentNullException(nameof(detalleAnalisis));
         }
 
-        public void AgregarDetalle(int detalleAnalisisID, int analisisID, int tipoAnalisisID, string resultado)
+        public void AgregarDetalle(int detalleAnalisisID, int analisisID, int tipoAnalisisID,string descripcion, string resultado)
         {
-            this.DetalleAnalisis.Add(new DetalleAnalisis(detalleAnalisisID, analisisID, tipoAnalisisID, resultado));
+            this.DetalleAnalisis.Add(new DetalleAnalisis(detalleAnalisisID, analisisID, tipoAnalisisID, descripcion, resultado));
         }
         public void RemoverDetalle(int Index)
         {

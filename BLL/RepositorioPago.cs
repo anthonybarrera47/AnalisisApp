@@ -57,20 +57,25 @@ namespace BLL
                     contexto.Dispose();
                 }
 
-                foreach (var item in entity.DetallesPagos)
+                foreach (var item in entity.DetallesPagos.ToList())
                 {
-                    var estado = EntityState.Unchanged;
                     if (item.DetallePagoID == 0)
                     {
                         RepositorioAnalisis repositorio = new RepositorioAnalisis();
                         Analisis Analisis = repositorio.Buscar(item.AnalisisID);
                         Analisis.Balance -= item.Monto;
-                        estado = EntityState.Added;
                         repositorio.Modificar(Analisis);
                         repositorio.Dispose();
+                        db.Entry(item).State =  EntityState.Added;
                     }
-                    db.Entry(item).State = estado;
                 }
+                foreach (var item in entity.DetallesPagos.ToList())
+                {
+                    if (item.DetallePagoID != 0)
+                        db.Entry(item).State = EntityState.Modified;
+                }
+                    
+
                 db.Entry(entity).State = EntityState.Modified;
                 paso = (db.SaveChanges() > 0);
             }
@@ -86,9 +91,12 @@ namespace BLL
             Contexto db = new Contexto();
             try
             {
+                RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
                 Pagos = db.Pagos.Include(x => x.DetallesPagos)
                     .Where(x => x.PagosID == id)
                     .FirstOrDefault();
+                if(Pagos != null)
+                    Pagos.NombrePaciente = repositorio.Buscar(Pagos.PacienteID).Nombre;
             }
             catch (Exception)
             { throw; }
@@ -113,8 +121,32 @@ namespace BLL
         }
         public override List<Pagos> GetList(Expression<Func<Pagos, bool>> expression)
         {
-            return base.GetList(expression);
+            List<Pagos> Lista = new List<Pagos>();
+            RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
+            Contexto db = new Contexto();
+            try
+            {
+                Lista = db.Set<Pagos>().AsNoTracking().Where(expression).ToList();
+                if(Lista.Count>0)
+                {
+                    foreach(var item in Lista)
+                    {
+                        item.NombrePaciente = repositorio.Buscar(item.PacienteID).Nombre;
+                        item.DetallesPagos.ForEach(x => item.TotalPagado += x.Monto);
+                    }
+                }
+            }
+            catch(Exception)
+            { throw; }
+            finally
+            { db.Dispose(); }
+            return Lista;
         }
-
+        public string GetNombrePaciente(int id)
+        {
+            RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
+            Pacientes pacientes = repositorio.Buscar(id);
+            return pacientes.Nombre;
+        }
     }
 }

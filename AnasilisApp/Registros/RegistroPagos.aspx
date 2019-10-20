@@ -41,7 +41,7 @@
                         <span class="input-group-text" id="PacienteNombre">Paciente </span>
                     </div>
                     <div aria-describedby="PacienteNombre">
-                        <asp:TextBox ID="PacienteTextBox" runat="server" CssClass="form-control input-sm" Visible="true">
+                        <asp:TextBox AutoPostBack="true" OnTextChanged="PacienteTextBox_TextChanged" ID="PacienteTextBox" runat="server" CssClass="form-control input-sm" Visible="true">
                         </asp:TextBox>
                     </div>
                     <div class="input-group-append">
@@ -89,7 +89,7 @@
                                     CssClass="table table-condensed table-bordered table-responsive"
                                     CellPadding="4" ForeColor="#333333" GridLines="None"
                                     OnPageIndexChanging="DetalleGridView_PageIndexChanging"
-                                    AllowPaging="true" PageSize="6">
+                                    AllowPaging="true" PageSize="6" AutoGenerateColumns="false">
                                     <Columns>
                                         <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
                                             <ItemTemplate>
@@ -97,13 +97,12 @@
                                                     Text="Remover" CssClass="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-<%--                                        <asp:BoundField HeaderText="DetallePagoID" DataField="DetallePagoID" />
-                                        <asp:BoundField HeaderText="PagosID" DataField="PagosID" />
+                                        <asp:BoundField HeaderText="DetallePagoID" DataField="DetallePagoID" Visible="false" />
+                                        <asp:BoundField HeaderText="PagosID" DataField="PagosID" Visible="false" />
                                         <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID" />
-                                        <asp:BoundField HeaderText="Fecha" DataField="FechaRegistro" />
-                                        <asp:BoundField HeaderText="Balance" DataField="Balance" />
+                                        <asp:BoundField HeaderText="Fecha" DataField="FechaRegistro" DataFormatString="{0:dd-MM-yyyy}"  />
                                         <asp:BoundField HeaderText="Monto" DataField="Monto" />
-                                        <asp:BoundField HeaderText="Estado" DataField="Estado" />--%>
+                                        <asp:BoundField HeaderText="Estado" DataField="Estado" />
                                     </Columns>
                                     <AlternatingRowStyle BackColor="LightBlue" />
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />

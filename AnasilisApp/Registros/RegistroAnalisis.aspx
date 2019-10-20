@@ -81,7 +81,7 @@
                                     CssClass="table table-condensed table-bordered table-responsive"
                                     CellPadding="4" ForeColor="#333333" GridLines="None"
                                     OnPageIndexChanging="DetalleGridView_PageIndexChanging"
-                                    AllowPaging="true" PageSize="5">
+                                    AllowPaging="true" PageSize="5" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="LightBlue" />
                                     <Columns>
                                         <asp:TemplateField ShowHeader="False" HeaderText="Opciones">
@@ -90,6 +90,11 @@
                                                     Text="Remover" class="btn btn-danger btn-sm" OnClick="RemoverDetalleClick_Click" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:BoundField HeaderText="DetalleAnalisisID" DataField="DetalleAnalisisID" Visible="false" />
+                                        <asp:BoundField HeaderText="AnalisisID" DataField="AnalisisID" Visible="false" />
+                                        <asp:BoundField HeaderText="TipoAnalisisID" DataField="TipoAnalisisID" Visible="false" />
+                                        <asp:BoundField HeaderText="Descripcion" DataField="DescripcionTipoAnalisis" />
+                                        <asp:BoundField HeaderText="Resultado" DataField="Resultado" />
                                     </Columns>
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                                     <RowStyle BackColor="#EFF3FB" />

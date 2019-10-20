@@ -38,6 +38,8 @@ namespace Entidades
         UsuarioExistente,
         [Description("¡Registro No Encontrado!")]
         RegistroNoEncontrado,
+        [Description("Su pago supera la deuda Existente")]
+        EstaSuperandoDeuda
     }
     public enum TipoTitulo
     {

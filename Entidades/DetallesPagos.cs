@@ -16,6 +16,8 @@ namespace Entidades
         public int PagosID { get; set; }
         public int AnalisisID { get; set; }
         public decimal Monto { get; set; }
+        [NotMapped]
+        public DateTime FechaRegistro { get; set; }
         public string Estado { get; set; }
         [ForeignKey("PagosID")]
         public virtual Pagos Pagos { get; set; }
@@ -29,6 +31,7 @@ namespace Entidades
             AnalisisID = 0;
             Monto = 0;
             Estado = string.Empty;
+            FechaRegistro = DateTime.Now;
         }
         public DetallesPagos(int detallePagoID, int pagosID, int analisisID, decimal monto,string estado)
         {
@@ -37,6 +40,7 @@ namespace Entidades
             AnalisisID = analisisID;
             Monto = monto;
             Estado = estado;
+            FechaRegistro = DateTime.Now;
         }
     }
 

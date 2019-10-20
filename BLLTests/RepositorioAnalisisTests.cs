@@ -49,7 +49,7 @@ namespace BLL.Tests
                 PacienteID = 1,
                 FechaRegistro = DateTime.Now
             };
-            analisis.DetalleAnalisis.Add(new DetalleAnalisis(0, 0, 1, "Positivo"));
+            //analisis.DetalleAnalisis.Add(new DetalleAnalisis(0, 0, 1, "Positivo"));
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
             bool paso = repositorio.Guardar(analisis);
             repositorio.Dispose();
@@ -61,7 +61,7 @@ namespace BLL.Tests
         {
             RepositorioAnalisis repositorio = new RepositorioAnalisis();
             Analisis analisis = repositorio.Buscar(2);
-            analisis.DetalleAnalisis.Add(new DetalleAnalisis(0, 2, 1, "Negativo"));
+            //analisis.DetalleAnalisis.Add(new DetalleAnalisis(0, 2, 1, "Negativo"));
             bool paso = repositorio.Modificar(analisis);
             repositorio.Dispose();
             Assert.IsTrue(paso);

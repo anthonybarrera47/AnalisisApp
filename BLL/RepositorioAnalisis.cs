@@ -16,7 +16,7 @@ namespace BLL
         {
 
         }
-      
+
         public override bool Guardar(Analisis entity)
         {
             entity.Balance = entity.Monto;
@@ -53,7 +53,7 @@ namespace BLL
                             repositorioBase.Dispose();
                         }
                     }
-                    contexto.SaveChanges();                        
+                    contexto.SaveChanges();
                 }
                 foreach (var item in entity.DetalleAnalisis.ToList())
                 {
@@ -91,14 +91,21 @@ namespace BLL
         {
             Analisis analisis = new Analisis();
             Contexto db = new Contexto();
+            RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
             try
             {
+
                 analisis = db.Analisis.AsNoTracking().Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
+                if(analisis!=null)
+                    analisis.DetalleAnalisis.ForEach(x => x.DescripcionTipoAnalisis = repositorio.Buscar(x.TipoAnalisisID).Descripcion);
             }
             catch (Exception)
             { throw; }
             finally
-            { db.Dispose(); }
+            {
+                db.Dispose();
+                repositorio.Dispose();
+            }
             return analisis;
         }
         public override List<Analisis> GetList(Expression<Func<Analisis, bool>> expression)
