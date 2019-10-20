@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidades
 {
@@ -23,7 +19,7 @@ namespace Entidades
             Balance = 0;
             Fecha = DateTime.Now;
         }
-        public Pacientes(int pacienteID, string nombre,decimal balance,DateTime fecha)
+        public Pacientes(int pacienteID, string nombre, decimal balance, DateTime fecha)
         {
             PacienteID = pacienteID;
             Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));

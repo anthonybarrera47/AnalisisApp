@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidades
 {
@@ -40,7 +37,7 @@ namespace Entidades
             DetalleAnalisis = detalleAnalisis ?? throw new ArgumentNullException(nameof(detalleAnalisis));
         }
 
-        public void AgregarDetalle(int detalleAnalisisID, int analisisID, int tipoAnalisisID,string descripcion, string resultado)
+        public void AgregarDetalle(int detalleAnalisisID, int analisisID, int tipoAnalisisID, string descripcion, string resultado)
         {
             this.DetalleAnalisis.Add(new DetalleAnalisis(detalleAnalisisID, analisisID, tipoAnalisisID, descripcion, resultado));
         }

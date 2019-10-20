@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -66,7 +64,7 @@ namespace BLL
                         Analisis.Balance -= item.Monto;
                         repositorio.Modificar(Analisis);
                         repositorio.Dispose();
-                        db.Entry(item).State =  EntityState.Added;
+                        db.Entry(item).State = EntityState.Added;
                     }
                 }
                 foreach (var item in entity.DetallesPagos.ToList())
@@ -74,7 +72,7 @@ namespace BLL
                     if (item.DetallePagoID != 0)
                         db.Entry(item).State = EntityState.Modified;
                 }
-                    
+
 
                 db.Entry(entity).State = EntityState.Modified;
                 paso = (db.SaveChanges() > 0);
@@ -95,7 +93,7 @@ namespace BLL
                 Pagos = db.Pagos.Include(x => x.DetallesPagos)
                     .Where(x => x.PagosID == id)
                     .FirstOrDefault();
-                if(Pagos != null)
+                if (Pagos != null)
                     Pagos.NombrePaciente = repositorio.Buscar(Pagos.PacienteID).Nombre;
             }
             catch (Exception)
@@ -127,16 +125,16 @@ namespace BLL
             try
             {
                 Lista = db.Set<Pagos>().AsNoTracking().Where(expression).ToList();
-                if(Lista.Count>0)
+                if (Lista.Count > 0)
                 {
-                    foreach(var item in Lista)
+                    foreach (var item in Lista)
                     {
                         item.NombrePaciente = repositorio.Buscar(item.PacienteID).Nombre;
                         item.DetallesPagos.ForEach(x => item.TotalPagado += x.Monto);
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             { throw; }
             finally
             { db.Dispose(); }

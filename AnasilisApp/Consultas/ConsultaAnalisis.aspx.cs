@@ -67,7 +67,7 @@ namespace AnasilisApp.Consultas
             {
                 RepositorioBase<Pacientes> repositorio = new RepositorioBase<Pacientes>();
                 dt.Rows.Add(item.AnalisisID, item.PacienteID, repositorio.Buscar(item.PacienteID).Nombre,
-                         item.Monto, item.Balance,  item.FechaRegistro.ToFormatDate());
+                         item.Monto, item.Balance, item.FechaRegistro.ToFormatDate());
                 repositorio.Dispose();
             }
             DatosGridView.DataSource = dt;
@@ -115,8 +115,8 @@ namespace AnasilisApp.Consultas
             {
                 RepositorioBase<TipoAnalisis> repositorio = new RepositorioBase<TipoAnalisis>();
                 var TipoAnalisis = repositorio.Buscar(item.TipoAnalisisID);
-                dt.Rows.Add(item.DetalleAnalisisID,item.AnalisisID,
-                         item.TipoAnalisisID,TipoAnalisis.Descripcion,TipoAnalisis.Monto
+                dt.Rows.Add(item.DetalleAnalisisID, item.AnalisisID,
+                         item.TipoAnalisisID, TipoAnalisis.Descripcion, TipoAnalisis.Monto
                          , item.Resultado);
                 repositorio.Dispose();
             }

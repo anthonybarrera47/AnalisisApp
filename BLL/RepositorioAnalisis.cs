@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -96,7 +94,7 @@ namespace BLL
             {
 
                 analisis = db.Analisis.AsNoTracking().Include(x => x.DetalleAnalisis).Where(x => x.AnalisisID == id).FirstOrDefault();
-                if(analisis!=null)
+                if (analisis != null)
                     analisis.DetalleAnalisis.ForEach(x => x.DescripcionTipoAnalisis = repositorio.Buscar(x.TipoAnalisisID).Descripcion);
             }
             catch (Exception)

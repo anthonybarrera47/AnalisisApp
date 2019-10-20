@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BLL;
+﻿using BLL;
 using Entidades;
 using Extensores;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace BLLTests
 {
@@ -20,7 +20,7 @@ namespace BLLTests
             {
                 FechaRegistro = DateTime.Now
             };
-            pagos.AgregarDetalle(0, 0, 1, 200,"Prueba");
+            pagos.AgregarDetalle(0, 0, 1, 200, "Prueba");
             bool paso = repositorio.Guardar(pagos);
             repositorio.Dispose();
             Assert.IsTrue(paso);
@@ -31,7 +31,7 @@ namespace BLLTests
             RepositorioPago repositorio = new RepositorioPago();
             Pagos pagos = repositorio.Buscar(1);
             pagos.FechaRegistro = DateTime.Now;
-            pagos.AgregarDetalle(0, pagos.PagosID, 1, 200,"Prueba");
+            pagos.AgregarDetalle(0, pagos.PagosID, 1, 200, "Prueba");
             bool paso = repositorio.Modificar(pagos);
             repositorio.Dispose();
             Assert.IsTrue(paso);
@@ -47,7 +47,7 @@ namespace BLLTests
         public void GetListPagos()
         {
             RepositorioPago repositorio = new RepositorioPago();
-            Assert.IsTrue((repositorio.GetList(x=>true).Count>0));
+            Assert.IsTrue((repositorio.GetList(x => true).Count > 0));
         }
         [TestMethod]
         public void EliminarPagos()

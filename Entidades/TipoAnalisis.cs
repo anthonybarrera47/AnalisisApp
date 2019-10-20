@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidades
 {
@@ -22,7 +18,7 @@ namespace Entidades
             Monto = 0;
             FechaRegistro = DateTime.Now;
         }
-        public TipoAnalisis(int tipoAnalisisID, string descripcion,decimal monto,DateTime Fecha)
+        public TipoAnalisis(int tipoAnalisisID, string descripcion, decimal monto, DateTime Fecha)
         {
             TipoAnalisisID = tipoAnalisisID;
             Monto = monto;

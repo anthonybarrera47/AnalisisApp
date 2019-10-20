@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidades
 {
@@ -33,7 +29,7 @@ namespace Entidades
             Estado = string.Empty;
             FechaRegistro = DateTime.Now;
         }
-        public DetallesPagos(int detallePagoID, int pagosID, int analisisID, decimal monto,string estado)
+        public DetallesPagos(int detallePagoID, int pagosID, int analisisID, decimal monto, string estado)
         {
             DetallePagoID = detallePagoID;
             PagosID = pagosID;

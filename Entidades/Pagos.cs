@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidades
-{   [Serializable]
+{
+    [Serializable]
     public class Pagos
     {
         [Key]
@@ -28,7 +26,7 @@ namespace Entidades
             NombrePaciente = string.Empty;
             TotalPagado = 0;
         }
-        public Pagos(int pagosID,int pacienteId,decimal totalPagado, List<DetallesPagos> detallesPagos)
+        public Pagos(int pagosID, int pacienteId, decimal totalPagado, List<DetallesPagos> detallesPagos)
         {
             PagosID = pagosID;
             PacienteID = pacienteId;
@@ -37,7 +35,7 @@ namespace Entidades
             FechaRegistro = DateTime.Now;
             TotalPagado = totalPagado;
         }
-        public void AgregarDetalle(int DetallesPagoID,int PagosID,int AnalisisID,decimal Monto,string estado)
+        public void AgregarDetalle(int DetallesPagoID, int PagosID, int AnalisisID, decimal Monto, string estado)
         {
             DetallesPagos.Add(new DetallesPagos(DetallesPagoID, PagosID, AnalisisID, Monto, estado));
         }
@@ -45,6 +43,6 @@ namespace Entidades
         {
             this.DetallesPagos.RemoveAt(Index);
         }
-        
+
     }
 }

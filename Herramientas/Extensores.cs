@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Web.UI;
 
 namespace Extensores
 {
@@ -28,7 +27,7 @@ namespace Extensores
         public static int ToInt(this object obj)
         {
             if (obj.EsNulo())
-                return 0 ;
+                return 0;
             int.TryParse(obj.ToString(), out int value);
             return value;
         }
