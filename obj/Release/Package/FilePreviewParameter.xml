@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="AnalisisApp" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\antho\\source\\repos\\AnalisisApp\\AnasilisApp\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\antho\\source\\repos\\AnalisisApp\\AnasilisApp\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="ConStr-Web.config Connection String" description="ConStr Connection String used in web.config by the application to access the database." value="Data Source =.\SqlExpress;&#xD;&#xA;        &#xD;&#xA;      Initial Catalog=AnalisisDb;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\antho\\source\\repos\\AnalisisApp\\AnasilisApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ConStr']/@connectionString" />
+  </parameter>
+  <parameter name="=ConStrWeb-Web.config Connection String" description="=ConStrWeb Connection String used in web.config by the application to access the database." value="Server=tcp:sugerencias.database.windows.net,1433;&#xD;&#xA;         Initial Catalog=AnalisisDb;&#xD;&#xA;         Persist Security Info=False;&#xD;&#xA;         User ID=Prueba;&#xD;&#xA;         Password=Ap123456;&#xD;&#xA;         MultipleActiveResultSets=False;&#xD;&#xA;         Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\antho\\source\\repos\\AnalisisApp\\AnasilisApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='=ConStrWeb']/@connectionString" />
+  </parameter>
+</parameters>

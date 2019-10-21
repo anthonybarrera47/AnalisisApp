@@ -1,0 +1,16 @@
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\bin\Release\Herramientas.dll
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\bin\Release\Herramientas.pdb
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\bin\Release\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\bin\Release\Entidades.pdb
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\obj\Release\Herramientas.csprojAssemblyReference.cache
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\obj\Release\Herramientas.csproj.CopyComplete
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\obj\Release\Herramientas.dll
+C:\Users\antho\source\repos\AnalisisApp\Herramientas\obj\Release\Herramientas.pdb
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Release\Herramientas.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Release\Herramientas.pdb
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Release\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Release\Entidades.pdb
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Release\Herramientas.csprojAssemblyReference.cache
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Release\Herramientas.csproj.CopyComplete
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Release\Herramientas.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Release\Herramientas.pdb

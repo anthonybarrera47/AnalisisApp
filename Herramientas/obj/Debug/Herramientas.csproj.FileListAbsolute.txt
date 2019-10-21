@@ -1,0 +1,8 @@
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Debug\Herramientas.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Debug\Herramientas.pdb
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Debug\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\bin\Debug\Entidades.pdb
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Debug\Herramientas.csprojAssemblyReference.cache
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Debug\Herramientas.csproj.CopyComplete
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Debug\Herramientas.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Herramientas\obj\Debug\Herramientas.pdb

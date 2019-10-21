@@ -1,0 +1,4 @@
+C:\Users\antho\source\repos\AnalisisApp\Entidades\bin\Release\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\Entidades\bin\Release\Entidades.pdb
+C:\Users\antho\source\repos\AnalisisApp\Entidades\obj\Release\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\Entidades\obj\Release\Entidades.pdb

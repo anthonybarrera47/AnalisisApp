@@ -10,7 +10,7 @@ namespace DAL
         public DbSet<Analisis> Analisis { get; set; }
         public DbSet<TipoAnalisis> TipoAnalisis { get; set; }
         public DbSet<Pagos> Pagos { get; set; }
-        public Contexto() : base("ConStr")
+        public Contexto() : base("ConStrWeb")
         { }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,0 +1,9 @@
+C:\Users\antho\source\repos\AnalisisApp\Extensores\bin\Debug\Extensores.dll
+C:\Users\antho\source\repos\AnalisisApp\Extensores\bin\Debug\Extensores.pdb
+C:\Users\antho\source\repos\AnalisisApp\Extensores\bin\Debug\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\Extensores\bin\Debug\Entidades.pdb
+C:\Users\antho\source\repos\AnalisisApp\Extensores\obj\Debug\Extensores.csprojAssemblyReference.cache
+C:\Users\antho\source\repos\AnalisisApp\Extensores\obj\Debug\Extensores.csproj.CoreCompileInputs.cache
+C:\Users\antho\source\repos\AnalisisApp\Extensores\obj\Debug\Extensores.csproj.CopyComplete
+C:\Users\antho\source\repos\AnalisisApp\Extensores\obj\Debug\Extensores.dll
+C:\Users\antho\source\repos\AnalisisApp\Extensores\obj\Debug\Extensores.pdb

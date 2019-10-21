@@ -1,0 +1,4 @@
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Entidades\bin\Debug\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Entidades\bin\Debug\Entidades.pdb
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Entidades\obj\Debug\Entidades.dll
+C:\Users\antho\source\repos\AnalisisApp\AnasilisApp\Entidades\obj\Debug\Entidades.pdb
